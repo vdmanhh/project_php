@@ -1,0 +1,32 @@
+.notice{
+    width: 350px;
+    height: 70px;
+    background-color: darkblue;
+    position: absolute;
+    top: 80px;
+   right: 0%;
+    z-index: 100;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 1s ease;
+   visibility: hidden;
+   opacity: 0;
+}
+.actives{
+   right: 0;
+
+    animation: manh 0.5s forwards linear;
+}
+@keyframes manh{
+    0%{ right: 0%;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    100%{ right: 2%;
+        visibility: visible;
+        opacity: 1;
+    }
+}
