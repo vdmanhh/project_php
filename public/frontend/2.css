@@ -1,0 +1,37 @@
+.liuser{
+    padding: 10px 25px;
+    background-color: #108bea;
+    color: white;
+    margin-bottom: 15px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    transform: translateX(12%);
+}
+.liuser:hover{
+    background-color: rgb(71, 85, 148);
+    transition: 0.4s;
+}
+.auser{
+    color: white !important;
+}
+.uluser{
+    width: 40%;
+}
+.showimage{
+    margin-left: 20%;
+    transform: translateX(-40%);
+    margin-bottom: 15px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
+.inputt{
+    height: 50px !important;
+    border-radius: 12px;
+}
+.labell{
+    font-size: 18px !important;
+}

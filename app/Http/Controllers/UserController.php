@@ -14,11 +14,23 @@ class UserController extends Controller
 
     public function login()
     {
+        // $pass = bcrypt('11111');
+        // DB::table('users')->insert([
+        //     'name'=>'linh',
+        //     'email'=>'linh@gmail.com',
+        //     'password'=>$pass,
+        //     'avatar'=>'',
+        //     'role'=>'0'
+        // ]);
+
         return view('login');
     }
     public function home(){
         return view('admin.body.index');
     }
+
+
+
     public function logins(Request $request)
     {
         $user = new User();
@@ -40,15 +52,26 @@ class UserController extends Controller
             }
             else{
                 Auth::login($user);
-                return Redirect()->route('home');
+                $notice = array(
+                    'message'=>'Login success',
+                    'alert-type'=>'success'
+                );
+                return Redirect()->route('home')->with($notice);
             }
 
         }
         else{
-            return Redirect()->back();
+
+            $notice = array(
+                'message'=>'Email or password was wrong',
+                'alert-type'=>'warning'
+            );
+            return Redirect()->back()->with($notice);
         }
 
     }
+
+
 
     public function logouts(){
         Auth::logout();

@@ -13,6 +13,8 @@
     transition: 1s ease;
    visibility: hidden;
    opacity: 0;
+   font-size: 19px;
+   border-radius: 18px;
 }
 .actives{
    right: 0;
@@ -30,3 +32,24 @@
         opacity: 1;
     }
 }
+.showw{
+    opacity: 1;
+}
+.form-control-sm:nth-child(2){
+    float: right;
+    width: 200px !important;
+}
+.activess
+{
+    background-color: #dddeee;
+    color: white !important;
+    border-radius: 10px;
+}
+.abrands{
+    color: white;
+    text-decoration: none !important;
+}
+.abrands:hover{
+    color: white;
+}
+
