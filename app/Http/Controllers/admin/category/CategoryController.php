@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin\category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -73,5 +74,11 @@ class CategoryController extends Controller
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notice);
+    }
+
+    public function getSubscategory($category_id){
+        $subcat = SubCategory::where('category_id',$category_id)->orderBy('subcategory_name_en','ASC')->get();
+   
+        return json_encode($subcat);
     }
 }
