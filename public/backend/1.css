@@ -52,4 +52,17 @@
 .abrands:hover{
     color: white;
 }
+.borderss{
+    border:1px solid white;
+}
+.bordersss{
+    border:1px solid white;
+    margin-bottom: 7px;
+}
+.rowaa{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+/* */
 

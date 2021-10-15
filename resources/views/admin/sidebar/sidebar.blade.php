@@ -33,7 +33,8 @@ $route = Route::current()->getName();
             <div class="bg-white py-2 collapse-inner rounded">
 
                 <a class="collapse-item" href="{{route('category')}}">All category</a>
-
+                <a class="collapse-item" href="{{route('subcategory')}}">All Subcategory</a>
+                <a class="collapse-item" href="{{route('subsubcate')}}">All SubSubCategory</a>
             </div>
         </div>
     </li>
@@ -58,16 +59,16 @@ $route = Route::current()->getName();
 
 
 
-    <li class="nav-item {{$prefix == '/subcategory' ? 'activess' : ''}}">
+    <li class="nav-item {{$prefix == '/product' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true" aria-controls="collapseTable">
             <i class="fas fa-fw fa-table"></i>
-            <span>Sub Category</span>
+            <span>Product</span>
         </a>
         <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tables</h6>
-                <a class="collapse-item" href="{{route('subcategory')}}">All Subcategory</a>
-
+                <a class="collapse-item" href="{{route('product')}}">Add Product</a>
+                <a class="collapse-item" href="{{route('subcategory')}}">Manager Product</a>
             </div>
         </div>
     </li>

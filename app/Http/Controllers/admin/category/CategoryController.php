@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin\category;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -78,7 +79,13 @@ class CategoryController extends Controller
 
     public function getSubscategory($category_id){
         $subcat = SubCategory::where('category_id',$category_id)->orderBy('subcategory_name_en','ASC')->get();
-   
+
+        return json_encode($subcat);
+    }
+
+    public function getsubSubscategory($subcategory_id){
+        $subcat = SubSubCategory::where('subcategory_id',$subcategory_id)->orderBy('subsubcategory_name_en','ASC')->get();
+
         return json_encode($subcat);
     }
 }

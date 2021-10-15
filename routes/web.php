@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\category\CategoryController;
 use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
 use App\Http\Controllers\brand\BrandController;
+use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users;
 use Illuminate\Support\Facades\Route;
@@ -62,7 +63,11 @@ Route::group(['middleware'=>'auth'],function(){
 Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
 
     Route::get('/category',[CategoryController::class,'category'])->name('category');
+
     Route::get('/subcategory/ajax/{category_id}',[CategoryController::class,'getSubscategory'])->name('categorys');
+    Route::get('/ajax/{subcategory_id}',[CategoryController::class,'getsubSubscategory'])->name('categorys');
+
+
     Route::post('/add/category',[CategoryController::class,'Addcate'])->name('add.category');
     Route::get('/category/edit/{id}',[CategoryController::class,'CatesEdit'])->name('category.edit');
     Route::post('/update/category/{id}',[CategoryController::class,'UpdateCate'])->name('update.category');
@@ -70,7 +75,7 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
 });
 
 //sub-cate
-Route::group(['prefix'=>'subcategory','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
 
     Route::get('/subcategory',[SubCateController::class,'subcategory'])->name('subcategory');
     Route::post('/add/subcategory',[SubCateController::class,'addsubcategory'])->name('add.subcategory');
@@ -79,11 +84,18 @@ Route::group(['prefix'=>'subcategory','middleware'=>['auth','checkauth']],functi
     Route::get('/subcategory/delete/{id}',[SubCateController::class,'subcategoryDelete'])->name('subcategory.delete');
 });
 
-Route::group(['prefix'=>'subsubcategory','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
 
     Route::get('/subsubcategory',[SubSubCate::class,'subcategory'])->name('subsubcate');
     Route::post('/subsubcategory/add',[SubSubCate::class,'Addsubcategory'])->name('add.subsubcategory');
     Route::get('/subsubcategory/edit/{id}',[SubSubCate::class,'Editsubcategory'])->name('subsubcategory.edit');
     Route::post('/subsubcategory/update/{id}',[SubSubCate::class,'Updatesubcategory'])->name('update.subsubcategory');
     Route::get('/subsubcategory/delete/{id}',[SubSubCate::class,'Deletesubcategory'])->name('subsubcategory.delete');
+});
+
+//product
+Route::group(['prefix'=>'product','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/product',[ProductController::class,'product'])->name('product');
+    Route::post('/product/add',[ProductController::class,'addProduct'])->name('add.product');
 });
