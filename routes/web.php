@@ -97,5 +97,16 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
 Route::group(['prefix'=>'product','middleware'=>['auth','checkauth']],function(){
 
     Route::get('/product',[ProductController::class,'product'])->name('product');
+    Route::get('/product/manager',[ProductController::class,'product_manager'])->name('product.manager');
     Route::post('/product/add',[ProductController::class,'addProduct'])->name('add.product');
+    Route::get('/product/edit/{id}',[ProductController::class,'product_edit'])->name('product.edit');
+    Route::post('/product/update/{id}',[ProductController::class,'updateProduct'])->name('product.update');
+    Route::post('/product/update/multi-iamge/{id}',[ProductController::class,'updateProductMultiImage'])->name('update.multiiamge');
+    Route::post('/product/addmulti/{id}',[ProductController::class,'addMulti'])->name('add.multiimages');
+    Route::post('/product/changetham/{id}',[ProductController::class,'changetham'])->name('update.thamn');
+    Route::get('/product/deletemul/{id}',[ProductController::class,'deletMul'])->name('delete.multi');
+
+    Route::get('/active/{id}',[ProductController::class,'active'])->name('active');
+    Route::get('/inactive/{id}',[ProductController::class,'inactive'])->name('inactive');
+    Route::get('/delete_product/{id}',[ProductController::class,'deleteP'])->name('product.delete');
 });

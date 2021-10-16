@@ -68,7 +68,7 @@ $route = Route::current()->getName();
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tables</h6>
                 <a class="collapse-item" href="{{route('product')}}">Add Product</a>
-                <a class="collapse-item" href="{{route('subcategory')}}">Manager Product</a>
+                <a class="collapse-item" href="{{route('product.manager')}}">Manager Product</a>
             </div>
         </div>
     </li>

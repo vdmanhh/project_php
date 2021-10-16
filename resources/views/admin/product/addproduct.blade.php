@@ -1,7 +1,7 @@
 @extends('admin.home')
 @section('home_admin')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<div class="container" style="background-color: #10467a;color:white; padding:20px;z-index:-1">
+<div class="container-fluid" style="background-color: #10467a;color:white; padding:20px;z-index:-1;width:90%">
         <h3 style="text-align: center;padding-bottom:20px">Add Product</h3>
     <div class="form">
         <form action="{{route('add.product')}}" method="post" enctype="multipart/form-data">
