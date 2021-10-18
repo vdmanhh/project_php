@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
 use App\Http\Controllers\brand\BrandController;
 use App\Http\Controllers\product\ProductController;
+use App\Http\Controllers\slider\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users;
 use Illuminate\Support\Facades\Route;
@@ -110,3 +111,20 @@ Route::group(['prefix'=>'product','middleware'=>['auth','checkauth']],function()
     Route::get('/inactive/{id}',[ProductController::class,'inactive'])->name('inactive');
     Route::get('/delete_product/{id}',[ProductController::class,'deleteP'])->name('product.delete');
 });
+
+//slider
+
+Route::group(['prefix'=>'slider','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/slider',[SliderController::class,'slider'])->name('slider');
+    Route::post('/slider/add',[SliderController::class,'add_slider'])->name('add.slider');
+    Route::get('/slider/edit/{id}',[SliderController::class,'edit_slider'])->name('slider.edit');
+    Route::post('/slider/update/{id}',[SliderController::class,'update_slider'])->name('update.slider');
+    Route::get('/slider/delete/{id}',[SliderController::class,'delete_slider'])->name('slider.delete');
+
+    Route::get('/active/{id}',[SliderController::class,'active'])->name('slider.active');
+    Route::get('/inactive/{id}',[SliderController::class,'inactive'])->name('slider.inactive');
+});
+
+Route::get('/english',[SliderController::class,'english'])->name('english');
+Route::get('/korean',[SliderController::class,'korean'])->name('korean');

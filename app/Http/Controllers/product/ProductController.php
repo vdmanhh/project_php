@@ -261,7 +261,7 @@ class ProductController extends Controller
             'status'=> '0'
         ]);
         $notification = array(
-			'message' => 'Active Product Successfully',
+			'message' => 'InActive Product Successfully',
 			'alert-type' => 'success'
 		);
 

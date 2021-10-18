@@ -75,15 +75,15 @@ $route = Route::current()->getName();
 
 
 
-    <li class="nav-item {{$prefix == '/subsubcategory' ? 'activess' : ''}}" >
+    <li class="nav-item {{$prefix == '/slider' ? 'activess' : ''}}" >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true" aria-controls="collapsePage">
             <i class="fas fa-fw fa-columns"></i>
-            <span>Sub-SubCategory</span>
+            <span>Slider</span>
         </a>
         <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
-                <a class="collapse-item" href="{{route('subsubcate')}}">All SubSubCategory</a>
+                <a class="collapse-item" href="{{route('slider')}}">All Slider</a>
 
             </div>
         </div>
