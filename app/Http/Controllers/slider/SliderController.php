@@ -18,22 +18,22 @@ class SliderController extends Controller
     }
 
     public function add_slider(Request $request){
-        $validated = $request->validate([
-            'title' => 'required',
-            'desc' => 'required',
-            'image' => 'required',
-            // categories la ten bang trong csdl
-        ], [
-            'title.required' => 'Please fill out information',
+        // $validated = $request->validate([
+        //     'title' => 'required',
+        //     'desc' => 'required',
+        //     'image' => 'required',
+        //     // categories la ten bang trong csdl
+        // ], [
+        //     'title.required' => 'Please fill out information',
 
-            'desc.required' => 'Please fill out information',
-            'image.required' => 'Please fill out information',
-        ]);
+        //     'desc.required' => 'Please fill out information',
+        //     'image.required' => 'Please fill out information',
+        // ]);
 
         $images = $request->file('image');
 
         $name_gen = hexdec(uniqid()).'.'.$images->getClientOriginalExtension();
-        Image::make($images)->resize(300,200)->save('upload/slider/'.$name_gen);
+        Image::make($images)->resize(1268,520)->save('upload/slider/'.$name_gen);
         $last_img = 'upload/slider/'.$name_gen;
 
         Slider::insert([

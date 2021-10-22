@@ -35,7 +35,7 @@
                                 <tr>
 
                                     <td><img style="width: 80px;height:80px;border:1px solid white" src="{{asset($key->product_thambnail)}}" alt=""></td>
-                                    <td>{{$key->product_name_en}}</td>
+                                    <td width ='20%'>{{$key->product_name_en}}</td>
                                     <td>{{$key->product_qty}}</td>
                                     <td>{{$key->selling_price}} $</td>
                                     <td>

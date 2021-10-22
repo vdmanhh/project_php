@@ -94,11 +94,11 @@
                 </div>
                 <div class="col-4">
                     <label for="exampleFormControlInput1">Product Size En</label>
-                    <input  name="product_size_en" type="text" value="" data-role="tagsinput" required="" />
+                    <input  name="product_size_en" type="text" value="" data-role="tagsinput"  />
                 </div>
                 <div class="col-4">
                     <label for="exampleFormControlInput1">Product Size Hin</label>
-                    <input name="product_size_hin" type="text" value="" data-role="tagsinput" required="" />
+                    <input name="product_size_hin" type="text" value="" data-role="tagsinput" />
                 </div>
             </div>
 

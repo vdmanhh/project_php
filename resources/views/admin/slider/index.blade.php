@@ -30,8 +30,22 @@
                             @foreach($sliders as $key)
                                 <tr>
                                     <td>{{$id++}}</td>
-                                    <td>{{$key->title}}</td>
-                                    <td>{{$key->desc}}</td>
+                                    <td>
+
+                                        @if($key->title == null)
+                                        <span class="badge badge-danger">No title</span>
+                                        @else
+                                        {{$key->title}}
+                                        @endif
+                                    </td>
+                                    <td>
+
+                                    @if($key->title == null)
+                                        <span class="badge badge-danger">No desc</span>
+                                        @else
+                                        {{$key->desc}}
+                                        @endif
+                                    </td>
                                     <td><img style="width: 60px;height:60px;border-radius:50%" src="{{asset($key->image)}}" alt=""></td>
                                     <td>
                                     @if($key->status == '1')

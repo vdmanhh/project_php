@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\category\CategoryController;
 use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
 use App\Http\Controllers\brand\BrandController;
+use App\Http\Controllers\Frontend;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\slider\SliderController;
 use App\Http\Controllers\UserController;
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.body.index');
-})->name('home');
+Route::get('/', [Frontend::class,'frontend'])->name('home');
 
 Route::get('/login',[UserController::class,'login'])->name('login');
 Route::post('/login/form',[UserController::class,'logins'])->name('login.user');
@@ -128,3 +127,8 @@ Route::group(['prefix'=>'slider','middleware'=>['auth','checkauth']],function(){
 
 Route::get('/english',[SliderController::class,'english'])->name('english');
 Route::get('/korean',[SliderController::class,'korean'])->name('korean');
+//product
+
+
+Route::get('/detail/product/{id}/{slug}',[ProductController::class,'detail_product']);
+Route::get('/product/tags/{tag}',[Frontend::class,'tag'])->name('tags');

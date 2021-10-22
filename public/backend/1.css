@@ -98,4 +98,9 @@
 .imt{
     width: 70% !important;
 }
+/* @if(session()->get('language') == 'korean')
+{{$product->product_name_hin}}
+@else
+{{$product->product_name_en}}
+@endif */
 

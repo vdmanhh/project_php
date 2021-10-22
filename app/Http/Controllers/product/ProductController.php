@@ -284,4 +284,10 @@ class ProductController extends Controller
 
 		return redirect()->back()->with($notification);
     }
+
+    public function detail_product($id,$slug){
+        $product = Product::find($id);
+        $imgs = MultiImg::where('product_id',$id)->get();
+        return view('frontend.body.detail',compact('product','imgs'));
+    }
 }
