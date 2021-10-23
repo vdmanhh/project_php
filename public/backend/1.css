@@ -98,6 +98,41 @@
 .imt{
     width: 70% !important;
 }
+.titlemenu{
+    cursor: pointer;
+}
+.rww{
+    display: flex;
+}
+.coll{
+    width: 20% !important;
+    margin-right: 10px;
+}
+.rowmodal{
+    display: flex;
+    margin: 5%;
+}
+.rolwcol{
+    width: 30%;
+}
+.colorstatus{
+    padding: 4px;
+    background-color: darkorange;
+    border-radius: 10px;
+}
+.colorstatusOut{
+    padding: 4px;
+    border-radius: 10px;
+    background-color: rgb(230, 26, 70);
+    color: white;
+}
+.price{
+    color: red;
+    margin-right: 10px;
+}
+.hoa{
+    text-transform: capitalize;
+}
 /* @if(session()->get('language') == 'korean')
 {{$product->product_name_hin}}
 @else

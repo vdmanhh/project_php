@@ -8,140 +8,7 @@
         <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
 
             <!-- ================================== TOP NAVIGATION ================================== -->
-            <div class="side-menu animate-dropdown outer-bottom-xs">
-                <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Categories</div>
-                <nav class="yamm megamenu-horizontal">
-                    <ul class="nav">
-                        @php
-                        $cates = App\Models\Category::latest()->get();
-
-                        @endphp
-                        @foreach($cates as $key)
-                        <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="{{$key->category_icon}} " style="margin-right: 12px;" aria-hidden="true"></i>
-
-                                @if(session()->get('language') == 'korean')
-                                {{$key->category_name_hin}}
-                                @else
-                                {{$key->category_name_en}}
-                                @endif
-
-                            </a>
-                            <ul class="dropdown-menu mega-menu">
-                                <li class="yamm-content">
-                                    <div class="row">
-                                        @php
-                                        $subs = App\Models\SubCategory::where('category_id',$key->id)->get();
-
-                                        @endphp
-                                        @foreach($subs as $value)
-                                        <div class="col-sm-12 col-md-3">
-                                            <h2 class="title">
-
-                                                @if(session()->get('language') == 'korean')
-                                                {{$value->subcategory_name_hin}}
-                                                @else
-                                                {{$value->subcategory_name_en}}
-                                                @endif
-                                            </h2>
-                                            <ul class="links list-unstyled">
-                                                @php
-                                                $subsubs = App\Models\SubSubCategory::where('subcategory_id',$key->id)->get();
-
-                                                @endphp
-                                                @foreach($subsubs as $values)
-                                                <li><a href="#">
-                                                        @if(session()->get('language') == 'korean')
-                                                        {{$values->subsubcategory_name_hin}}
-                                                        @else
-                                                        {{$values->subsubcategory_name_en}}
-                                                        @endif
-                                                    </a></li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        @endforeach
-                                        <!-- /.col -->
-
-                                        <!-- /.col -->
-
-                                        <!-- /.col -->
-
-                                        <!-- /.col -->
-                                    </div>
-                                    <!-- /.row -->
-                                </li>
-                                <!-- /.yamm-content -->
-                            </ul>
-                            <!-- /.dropdown-menu -->
-                        </li>
-                        @endforeach
-                        <!-- /.menu-item -->
-
-
-                        <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                        <ul class="dropdown-menu mega-menu">
-                            <li class="yamm-content">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-lg-4">
-                                        <ul>
-                                            <li><a href="#">Gaming</a></li>
-                                            <li><a href="#">Laptop Skins</a></li>
-                                            <li><a href="#">Apple</a></li>
-                                            <li><a href="#">Dell</a></li>
-                                            <li><a href="#">Lenovo</a></li>
-                                            <li><a href="#">Microsoft</a></li>
-                                            <li><a href="#">Asus</a></li>
-                                            <li><a href="#">Adapters</a></li>
-                                            <li><a href="#">Batteries</a></li>
-                                            <li><a href="#">Cooling Pads</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-4">
-                                        <ul>
-                                            <li><a href="#">Routers &amp; Modems</a></li>
-                                            <li><a href="#">CPUs, Processors</a></li>
-                                            <li><a href="#">PC Gaming Store</a></li>
-                                            <li><a href="#">Graphics Cards</a></li>
-                                            <li><a href="#">Components</a></li>
-                                            <li><a href="#">Webcam</a></li>
-                                            <li><a href="#">Memory (RAM)</a></li>
-                                            <li><a href="#">Motherboards</a></li>
-                                            <li><a href="#">Keyboards</a></li>
-                                            <li><a href="#">Headphones</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="dropdown-banner-holder"> <a href="#"><img alt="" src="{{asset('frontend/assets/images/banners/banner-side.png')}}" /></a> </div>
-                                </div>
-                                <!-- /.row -->
-                            </li>
-                            <!-- /.yamm-content -->
-                        </ul>
-                        <!-- /.dropdown-menu -->
-                        <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                        </li>
-                        <!-- /.menu-item -->
-
-                        <!-- /.dropdown-menu -->
-                        </li>
-                        <!-- /.menu-item -->
-
-                        <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-futbol-o"></i>Sports</a>
-                            <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                            <!-- /.dropdown-menu -->
-                            <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                        </li>
-                        <!-- /.menu-item -->
-
-
-                        <!-- /.dropdown-menu -->
-                        </li>
-                        <!-- /.menu-item -->
-
-                    </ul>
-                    <!-- /.nav -->
-                </nav>
-                <!-- /.megamenu-horizontal -->
-            </div>
+         @include('frontend.sidebar.menu')
             <!-- /.side-menu -->
             <!-- ================================== TOP NAVIGATION : END ================================== -->
 
@@ -149,73 +16,8 @@
             <div class="sidebar-widget hot-deals outer-bottom-xs">
                 <h3 class="section-title">Hot deals</h3>
 
-                <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
-                    @foreach($hotdeals as $key)
-                    <div class="item">
-                        <div class="products">
-                            <div class="hot-deal-wrapper">
-                                <div class="image">
-                                    <a href="{{url('detail/product/'.$key->id.'/'.$key->product_slug_en)}}">
-                                        <img src="{{asset($key->product_thambnail)}}" alt="">
 
-                                    </a>
-                                </div>
-                                <div class="sale-offer-tag" style="padding-top : 25px">
-                                @php
-                                                                $mount = $key->selling_price - $key->discount_price;
-                                                                $per = ($mount/$key->selling_price)*100;;
-                                                     @endphp
-                                                     {{round($per)}} %
-                                <span>
-
-                                </span></div>
-                                <div class="timing-wrapper">
-                                    <div class="box-wrapper">
-                                        <div class="date box"> <span class="key">120</span> <span class="value">DAYS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper">
-                                        <div class="hour box"> <span class="key">20</span> <span class="value">HRS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper">
-                                        <div class="minutes box"> <span class="key">36</span> <span class="value">MINS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper">
-                                        <div class="seconds box"> <span class="key">60</span> <span class="value">SEC</span> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.hot-deal-wrapper -->
-
-                            <div class="product-info text-left m-t-20">
-                                <h3 class="name"><a href="{{url('detail/product/'.$key->id.'/'.$key->product_slug_en)}}">
-                                @if(session()->get('language') == 'korean')
-                                {{$key->product_name_hin}}
-                                @else
-                                {{$key->product_name_en}}
-                                @endif
-                            </a></h3>
-                                <div class="rating rateit-small"></div>
-                                <div class="product-price"> <span class="price"> {{number_format($key->discount_price)}}</span> <span class="price-before-discount">{{number_format($key->selling_price)}}</span> </div>
-                                <!-- /.product-price -->
-
-                            </div>
-                            <!-- /.product-info -->
-
-                            <div class="cart clearfix animate-effect">
-                                <div class="action">
-                                    <div class="add-cart-button btn-group">
-                                        <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                        <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                                    </div>
-                                </div>
-                                <!-- /.action -->
-                            </div>
-                            <!-- /.cart -->
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-
+            @include('frontend.body.hotdeal')
 
             </div>
             <!-- ============================================== HOT DEALS: END ============================================== -->
@@ -282,12 +84,12 @@
                     <div class="tag-list">
                     @if(session()->get('language') == 'korean')
                         @foreach($tags_hin as $key)
-                        <a class="item" title="Phone" href="{{route('tags',$key->product_tags_hin)}}">{{$key->product_tags_hin}}</a>
+                        <a class="item" title="Phone" href="{{route('tags',$key->product_tags_hin)}}">{{str_replace(',',' ',$key->product_tags_hin)}}</a>
                         @endforeach
 
                         @else
                         @foreach($tags_en as $key)
-                        <a class="item" title="Phone" href="{{route('tags',$key->product_tags_en)}}">{{$key->product_tags_en}}</a>
+                        <a class="item" title="Phone" href="{{route('tags',$key->product_tags_en)}}">{{ str_replace(',',' ',$key->product_tags_en)}}</a>
                         @endforeach
                         @endif
 
@@ -536,8 +338,8 @@
                                                 <div class="action">
                                                     <ul class="list-unstyled">
                                                         <li class="add-cart-button btn-group">
-                                                            <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
-                                                            <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                                            <button data-toggle="modal"data-target="#exampleModal" id="{{$key->id}}" onclick="productview(this.id)" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
+                                                            <!-- <button class="btn btn-primary cart-btn" type="button">Add to cart</button> -->
                                                         </li>
                                                         <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
                                                         <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>

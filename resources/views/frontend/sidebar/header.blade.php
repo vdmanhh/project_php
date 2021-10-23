@@ -179,8 +179,8 @@
                                                     @endphp
                                                     @foreach($subs as $value)
                                                     <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-
-                                                        <h2 class="title">
+                                                    <a href="{{route('category.page',$value->id)}}">
+                                                        <h2 class="title titlemenu">
 
                                                             @if(session()->get('language') == 'korean')
                                                             {{$value->subcategory_name_hin}}
@@ -188,14 +188,14 @@
                                                             {{$value->subcategory_name_en}}
                                                             @endif
                                                         </h2>
-
+                                                    </a>
                                                         <ul class="links">
                                                             @php
                                                             $subsubs = App\Models\SubSubCategory::where('subcategory_id',$key->id)->get();
 
                                                             @endphp
                                                             @foreach($subsubs as $values)
-                                                            <li><a href="#">
+                                                            <li><a href="{{route('subsubcategory.page',$values->id)}}">
 
                                                                     @if(session()->get('language') == 'korean')
                                                                     {{$values->subsubcategory_name_hin}}

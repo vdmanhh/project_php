@@ -288,6 +288,11 @@ class ProductController extends Controller
     public function detail_product($id,$slug){
         $product = Product::find($id);
         $imgs = MultiImg::where('product_id',$id)->get();
-        return view('frontend.body.detail',compact('product','imgs'));
+        $color = $product->product_color_en;
+        $new_color = explode(',',$color);
+        $size =  $product->product_size_en;
+        $new_size =  explode(',',$size);
+        $product_relevant = Product::where('category_id',$product->category_id)->where('id','!=',$product->id)->limit(4)->get();
+        return view('frontend.body.detail',compact('product','imgs','new_size','new_color','product_relevant'));
     }
 }

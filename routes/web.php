@@ -132,3 +132,6 @@ Route::get('/korean',[SliderController::class,'korean'])->name('korean');
 
 Route::get('/detail/product/{id}/{slug}',[ProductController::class,'detail_product']);
 Route::get('/product/tags/{tag}',[Frontend::class,'tag'])->name('tags');
+Route::get('/categories/product/{slugs}',[Frontend::class,'categoriess'])->name('category.page');
+Route::get('/subcategories/product/{slugs}',[Frontend::class,'subcategoriess'])->name('subsubcategory.page');
+Route::get('/product/modal/{id}',[Frontend::class,'product_modal']);

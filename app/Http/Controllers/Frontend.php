@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Frontend extends Controller
 {
@@ -19,7 +22,47 @@ class Frontend extends Controller
     }
 
     public function tag($tag){
-        $products = Product::where('status',1)->where('product_tags_en',$tag)->where('product_tags_hin',$tag)->orderBy('id','DESC')->get();
-        return view('frontend.body.product_tags',compact('products'));
+
+        $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
+        $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
+       // $products = Product::where('status',1)->where('product_tags_en',$tag)->where('product_tags_hin',$tag)->orderBy('id','DESC')->get();
+        $products = Product::where('status',1)->where('product_tags_en',$tag)->where('product_tags_hin',$tag)->orderBy('id','DESC')->paginate(3);
+        $cates =Category::latest()->get();
+        return view('frontend.body.product_tags',compact('products','tags_hin','tags_en','cates'));
+    }
+
+    public function categoriess($slugs){
+        $products = Product::where('status',1)->where('subcategory_id',$slugs)->orderBy('id','DESC')->paginate(3);
+        $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
+        $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
+        $cates =Category::latest()->get();
+        return view('frontend.body.subcategory',compact('products','tags_en','tags_hin','cates'));
+    }
+
+    public function subcategoriess($slugs){
+        $products = Product::where('status',1)->where('subsubcategory_id',$slugs)->orderBy('id','DESC')->paginate(3);
+        $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
+        $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
+        $cates =Category::latest()->get();
+        return view('frontend.body.subsubcategory',compact('products','tags_en','tags_hin','cates'));
+    }
+
+    public function product_modal($id){
+        $product =Product::find($id);
+
+        $category = Category::where('id', $product->category_id)->first();
+        $brand = Brand::where('id', $product->brand_id)->first();
+        $color = $product->product_color_en;
+        $new_color = explode(',',$color);
+        $size =  $product->product_size_en;
+        $new_size =  explode(',',$size);
+
+        return response()->json(array(
+            "product" =>  $product,
+            'color' =>  $new_color,
+            'size' =>  $new_size,
+            'brand'=>$brand->brand_name_en,
+            'category'=>$category->category_name_en,
+        ));
     }
 }
