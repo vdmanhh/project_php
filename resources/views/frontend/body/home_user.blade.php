@@ -93,7 +93,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title title"  id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -127,7 +127,14 @@
 
                                     </select>
                                 </div>
-                                <div class="btn btn-info" style="width: 100%;">Add to Cart</div>
+                                <div class="form-group bigsize">
+                                    <label for="exampleFormControlSelect1">Quantity</label>
+                                    <input type="number" class="qty">
+                                </div>
+
+                                <input class="inputhiden" type="hidden">
+                                <!-- <button type="submit"onclick="addToCart()" class="btn btn-info" style="width: 100%;">Add to Cart</button> -->
+                                <button type="button" class="btn btn-primary mb-2" onclick="addToCart()" >Add to Cart</button>
                             </form>
                         </div>
                     </div>
@@ -165,6 +172,7 @@
     <script src="{{asset('frontend/assets/js/wow.min.js')}}"></script>
     <script src="{{asset('frontend/assets/js/scripts.js')}}"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         @if(Session::has('message'))
         var type = '{{Session::get("alert-type","info")}}'
@@ -204,6 +212,9 @@
 
 
 <script>
+
+
+
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
@@ -216,7 +227,8 @@
             dataType:'json',
             success : function(data){
                 $('.title').text(data.product.product_name_en);
-
+                $('.inputhiden').val(data.product.id);
+                $('.qty').val(1);
                 if(data.product.discount_price == null){
                     $('.price').text((data.product.selling_price).toLocaleString() + '$');
                     $('.selling_price').text('');
@@ -258,7 +270,83 @@
             }
         })
     }
+
+    function addToCart(){
+
+            var product_id = $('.inputhiden').val();
+            var product_name = $('.title').text();
+            var color = $('.selectcolor option:selected').text();
+            var size = $('.selectsize option:selected').text();
+            var quantity = $('.qty').val();
+
+            $.ajax({
+                type: "POST",
+                dataType : 'json',
+                data : {
+                    id :product_id ,
+                    name :product_name,
+                    color:color,
+                    quantity:quantity,
+                    size:size,
+                },
+                url : '/product/add/cart/',
+                success : function(datas){
+                    miniCart();
+
+                    $('#closeModel').click();
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      icon: 'success',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                if ($.isEmptyObject(datas.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: datas.success
+                    })
+                }else{
+                    Toast.fire({
+                        type: 'error',
+                        title: datas.error
+                    })
+                }
+                }
+            })
+    }
+
 </script>
+<script>
+    function miniCart(){
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url : '/minicart/',
+            success : function(value){
+               var miniCart = '';
+               $.each(value.carts,function(k,val){
+                miniCart +=`<div class="cart-item product-summary">
+                                    <div class="row "><div class="col-xs-4">
+                                            <div class="image"> <a href="detail.html"><img src="/${val.options.image}" alt=""></a> </div>
+                                        </div>
+                                        <div class="col-xs-7">
+
+                                          <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
+                                            <div class="price"> ${val.price} * ${val.qty}</div>
+
+                                        </div>
+                                        <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a>  </div> </div></div> <br>`;
+
+                $('.minicart').html(miniCart);
+               })
+            }
+        })
+    }
+    miniCart();
+</script>
+
 </body>
 
 </html>

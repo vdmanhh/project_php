@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -63,6 +64,53 @@ class Frontend extends Controller
             'size' =>  $new_size,
             'brand'=>$brand->brand_name_en,
             'category'=>$category->category_name_en,
+        ));
+    }
+
+    public function product_addCart(Request $request){
+        $product  = Product::find($request->id);
+        if($product->discount_price == NULL){
+            Cart::add( [
+                'id' => $request->id,
+                'name' => $request->name,
+                'qty' => $request->quantity,
+                'price' => $product->selling_price,
+                'weight' => 1,
+                'options' => [
+                    'size' => $request->size,
+                    'color'=>$request->color,
+                    'image'=>$product->product_thambnail
+                ]
+                ]);
+                return response()->json(['success'=>'add to cart success']);
+        }
+        else{
+            Cart::add( [
+                'id' => $request->id,
+                'name' => $request->name,
+                'qty' => $request->quantity,
+                'price' => $product->discount_price,
+                'weight' => 1,
+                'options' => [
+                    'size' => $request->size,
+                    'color'=>$request->color,
+                    'image'=>$product->product_thambnail
+                ]
+                ]);
+                return response()->json(['success'=>'add to cart success']);
+        }
+
+    }
+
+    public function miniCart(){
+
+    	$carts = Cart::content();
+    	$cartQty = Cart::count();
+    	$cartTotal = Cart::total();
+        return response()->json(array(
+            'carts' =>$carts,
+            'cartQty' =>$cartQty,
+            'cartTotal' =>$cartTotal
         ));
     }
 }

@@ -135,3 +135,5 @@ Route::get('/product/tags/{tag}',[Frontend::class,'tag'])->name('tags');
 Route::get('/categories/product/{slugs}',[Frontend::class,'categoriess'])->name('category.page');
 Route::get('/subcategories/product/{slugs}',[Frontend::class,'subcategoriess'])->name('subsubcategory.page');
 Route::get('/product/modal/{id}',[Frontend::class,'product_modal']);
+Route::post('/product/add/cart',[Frontend::class,'product_addCart']);
+Route::get('/minicart',[Frontend::class,'miniCart']);
