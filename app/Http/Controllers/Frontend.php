@@ -110,7 +110,12 @@ class Frontend extends Controller
         return response()->json(array(
             'carts' =>$carts,
             'cartQty' =>$cartQty,
-            'cartTotal' =>$cartTotal
+            'cartTotal' =>round($cartTotal),
         ));
+    }
+
+    public function removeCart($rowId){
+        Cart::remove($rowId);
+        return response()->json(['success'=>'Remove cart successfully']);
     }
 }

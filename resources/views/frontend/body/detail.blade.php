@@ -111,7 +111,7 @@
 
                         <div class='col-sm-12 col-md-8 col-lg-8 product-info-block'>
                             <div class="product-info">
-                                <h1 class="name">
+                                <h1 class="name titlees">
                                     @if(session()->get('language') == 'korean') {{
                          $product->product_name_hin }} @else {{
                         $product->product_name_en }} @endif
@@ -188,13 +188,15 @@
                                 </div><!-- /.price-container -->
 
                                 <div class="quantity-container info-container">
+                                <input type="hidden" class="inputhiden" value="{{$product->id}}">
+
                                     <form action="">
                                     <div class="row rww">
 
                                         <div class="coll" style="margin-left:10px" width='50%'>
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Select Color</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                <select class="form-control selectcolor" id="exampleFormControlSelect1">
                                                     <option selected="" disabled>Choose Color</option>
                                                     @foreach($new_color as $key )
                                                     <option value="{{$key}}">{{ucwords($key)}}</option>
@@ -204,22 +206,26 @@
                                             </div>
                                         </div>
                                         <div class="coll"  width='50%'>
+                                            @if($new_size == '')
+                                            @else
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Select Size</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                <select class="form-control selectsize" id="exampleFormControlSelect1">
                                                     <option selected="" disabled>Choose Size</option>
                                                    @foreach($new_size as $key )
                                                     <option value="{{$key}}">{{ucwords($key)}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            @endif
+
                                         </div>
 
-
+                                        <input type="number" class="qtyys" value="1">
                                     </div><!-- /.row -->
                                     <div class="add-btn" style="transform: translateX(-20px);">
-                                            <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO
-                                                CART</a>
+                                            <button type="button" onclick="addToCart()" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO
+                                                CART</button>
                                         </div>
 
                                  </form>

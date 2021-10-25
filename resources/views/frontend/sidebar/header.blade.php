@@ -7,7 +7,7 @@
                 <div class="cnt-account">
                     <ul class="list-unstyled">
                         <li class="myaccount"><a href="#"><span>My Account</span></a></li>
-                        <li class="wishlist"><a href="#"><span>Wishlist</span></a></li>
+                        <li class="wishlist"><a href="{{route('wishlist')}}"><span>Wishlist</span></a></li>
                         <li class="header_cart hidden-xs"><a href="#"><span>My Cart</span></a></li>
                         <li class="check"><a href="#"><span>Checkout</span></a></li>
                         @auth
@@ -98,14 +98,14 @@
                             <div class="items-cart-inner">
                                 <div class="basket">
                                     <div class="basket-item-count"><span class="count">2</span></div>
-                                    <div class="total-price-basket"> <span class="lbl">Shopping Cart</span> <span class="value">$4580</span> </div>
+                                    <div class="total-price-basket"> <span class="lbl">Shopping Cart</span> <span class="value carttotal"></span> </div>
                                 </div>
                             </div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="minicart">
-               
+
                                 </div>
 
 
@@ -116,7 +116,7 @@
                                 <div class="clearfix"></div>
                                 <hr>
                                 <div class="clearfix cart-total">
-                                    <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
+                                    <div class="pull-right"> <span class="text">Sub Total :</span><span class='price nedan'>$600.00</span> </div>
                                     <div class="clearfix"></div>
                                     <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
                                 </div>

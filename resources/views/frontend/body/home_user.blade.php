@@ -92,7 +92,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title title"  id="exampleModalLabel"></h5>
+                    <h5 class="modal-title titlees" id="exampleModalLabel"></h5>
                     <button type="button" id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,7 +103,7 @@
                             <img style="width: 140px; height : 174px" class="imgmodal" src="" alt="">
                         </div>
                         <div class="col-4 rolwcol" style="width: 50%;padding-left:20px;line-height:25px">
-                            <div><span>Product price : <strong class="price pr-5 hoa"></strong><del class="selling_price"></del> </span></div>
+                            <div><span>Product price : <strong class="pricess pr-5 hoa"></strong><del class="selling_price"></del> </span></div>
                             <div><span>Product code : <strong class="code hoa"></strong></span></div>
                             <div><span>Product category : <strong class="category hoa"></strong></span></div>
                             <div><span>Product brand : <strong class="brand hoa"></strong></span></div>
@@ -113,13 +113,13 @@
                             <form action="">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Color</label>
-                                    <select  class="selectcolor form-control" id="exampleFormControlSelect1">
+                                    <select class="selectcolor form-control" id="exampleFormControlSelect1">
                                         <option disabled selected=''>Choose Color</option>
 
 
                                     </select>
                                 </div>
-                                <div class="form-group bigsize">
+                                <div class="form-group bigsizee">
                                     <label for="exampleFormControlSelect1">Size</label>
                                     <select class="form-control selectsize" id="exampleFormControlSelect1">
                                         <option disabled selected=''>Choose Size</option>
@@ -127,14 +127,14 @@
 
                                     </select>
                                 </div>
-                                <div class="form-group bigsize">
+                                <div class="form-group bigsizes">
                                     <label for="exampleFormControlSelect1">Quantity</label>
-                                    <input type="number" class="qty">
+                                    <input type="number" class="qtyys">
                                 </div>
 
                                 <input class="inputhiden" type="hidden">
                                 <!-- <button type="submit"onclick="addToCart()" class="btn btn-info" style="width: 100%;">Add to Cart</button> -->
-                                <button type="button" class="btn btn-primary mb-2" onclick="addToCart()" >Add to Cart</button>
+                                <button type="button" class="btn btn-primary mb-2" onclick="addToCart()">Add to Cart</button>
                             </form>
                         </div>
                     </div>
@@ -211,123 +211,117 @@
     </script>
 
 
-<script>
-
-
-
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-        }
-    })
-    function productview(id){
-        $.ajax({
-            type : 'get',
-            url : '/product/modal/' + id,
-            dataType:'json',
-            success : function(data){
-                $('.title').text(data.product.product_name_en);
-                $('.inputhiden').val(data.product.id);
-                $('.qty').val(1);
-                if(data.product.discount_price == null){
-                    $('.price').text((data.product.selling_price).toLocaleString() + '$');
-                    $('.selling_price').text('');
-                }
-              else{
-                $('.price').text((data.product.discount_price).toLocaleString() + '$');
-                $('.selling_price').text((data.product.selling_price).toLocaleString() + '$');
-              }
-                $('.code').text(data.product.product_color_en);
-                $('.category').text(data.category);
-                $('.brand').text(data.brand);
-                if(data.product.product_qty >0){
-                    $('.status').text('Avaible');
-                    $('.status').addClass('colorstatus');
-                }
-                else{
-                    $('.status').text('StockOut');
-                    $('.status').addClass('colorstatusOut');
-                }
-
-                $('.imgmodal').attr('src','/'+data.product.product_thambnail);
-
-                $('.selectcolor').empty();
-                $.each(data.color,function(key,values){
-                    $('.selectcolor').append('<option value="'+values+'"> '+values+'</option>')
-                })
-
-                $('.selectsize').empty();
-                if(data.size == ''){
-                $('.bigsize').hide();
-                }
-                else{
-                    $.each(data.size,function(key,values){
-                    $('.selectsize').append('<option value="'+values+'"> '+values+'</option>')
-                })
-                }
-
-
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         })
-    }
 
-    function addToCart(){
+        function productview(id) {
+            $.ajax({
+                type: 'get',
+                url: '/product/modal/' + id,
+                dataType: 'json',
+                success: function(data) {
+                    $('.titlees').text(data.product.product_name_en);
+                    $('.inputhiden').val(data.product.id);
+                    $('.qtyys').val(1);
+                    if (data.product.discount_price == null) {
+                        $('.pricess').text((data.product.selling_price).toLocaleString() + '$');
+                        $('.selling_price').text('');
+                    } else {
+                        $('.pricess').text((data.product.discount_price).toLocaleString() + '$');
+                        $('.selling_price').text((data.product.selling_price).toLocaleString() + '$');
+                    }
+                    $('.code').text(data.product.product_color_en);
+                    $('.category').text(data.category);
+                    $('.brand').text(data.brand);
+                    if (data.product.product_qty > 0) {
+                        $('.status').text('Avaible');
+                        $('.status').removeClass('colorstatusOut');
+                        $('.status').addClass('colorstatus');
+                    } else {
+                        $('.status').text('StockOut');
+                        $('.status').removeClass('colorstatus');
+                        $('.status').addClass('colorstatusOut');
+                    }
+
+                    $('.imgmodal').attr('src', '/' + data.product.product_thambnail);
+
+                    $('.selectcolor').empty();
+                    $.each(data.color, function(key, values) {
+                        $('.selectcolor').append('<option value="' + values + '"> ' + values + '</option>')
+                    })
+
+                    $('.selectsize').empty();
+
+
+                    $.each(data.size, function(key, values) {
+                        $('.selectsize').append('<option value="' + values + '"> ' + values + '</option>')
+                        if (data.size == '') {
+                            $('.bigsizee').hide();
+                        } else {
+                            $('.bigsizee').show();
+                        }
+
+                    })
+
+
+
+                }
+            })
+        }
+
+        function addToCart() {
 
             var product_id = $('.inputhiden').val();
-            var product_name = $('.title').text();
+            var product_name = $('.titlees').text();
             var color = $('.selectcolor option:selected').text();
             var size = $('.selectsize option:selected').text();
-            var quantity = $('.qty').val();
+            var quantity = $('.qtyys').val();
 
             $.ajax({
                 type: "POST",
-                dataType : 'json',
-                data : {
-                    id :product_id ,
-                    name :product_name,
-                    color:color,
-                    quantity:quantity,
-                    size:size,
+                dataType: 'json',
+                data: {
+                    id: product_id,
+                    name: product_name,
+                    color: color,
+                    quantity: quantity,
+                    size: size,
                 },
-                url : '/product/add/cart/',
-                success : function(datas){
+                url: '/product/add/cart/',
+                success: function(datas) {
                     miniCart();
 
                     $('#closeModel').click();
 
-                    const Toast = Swal.mixin({
-                      toast: true,
-                      position: 'top-end',
-                      icon: 'success',
-                      showConfirmButton: false,
-                      timer: 3000
-                    })
-                if ($.isEmptyObject(datas.error)) {
-                    Toast.fire({
-                        type: 'success',
-                        title: datas.success
-                    })
-                }else{
-                    Toast.fire({
-                        type: 'error',
-                        title: datas.error
-                    })
-                }
+
+                    if ($.isEmptyObject(datas.error)) {
+                        var color = 'successWish';
+                    noticeAler(color,datas.success)
+                    } else {
+                        var color = 'failWish';
+                    noticeAler(color,datas.error);
+                    }
                 }
             })
-    }
-
-</script>
-<script>
-    function miniCart(){
-        $.ajax({
-            type:'GET',
-            dataType:'json',
-            url : '/minicart/',
-            success : function(value){
-               var miniCart = '';
-               $.each(value.carts,function(k,val){
-                miniCart +=`<div class="cart-item product-summary">
+        }
+    </script>
+    <script>
+        function miniCart() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/minicart/',
+                success: function(value) {
+                    var miniCart = "";
+                    $('.count').text(value.cartQty);
+                    $('.carttotal').text(value.cartTotal + '$');
+                    $('.nedan').text(value.cartTotal + '$');
+                    $.each(value.carts, function(k, val) {
+                        miniCart += `<div class="cart-item product-summary">
                                     <div class="row "><div class="col-xs-4">
                                             <div class="image"> <a href="detail.html"><img src="/${val.options.image}" alt=""></a> </div>
                                         </div>
@@ -337,16 +331,128 @@
                                             <div class="price"> ${val.price} * ${val.qty}</div>
 
                                         </div>
-                                        <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a>  </div> </div></div> <br>`;
+                                        <button type="button" class="col-xs-1 action" id='${val.rowId}' onclick='removeCart(this.id)'> <a href="#"><i class="fa fa-trash"></i></a>  </div> </div></button> <br>`;
 
-                $('.minicart').html(miniCart);
-               })
-            }
-        })
-    }
-    miniCart();
-</script>
+                        $('.minicart').html(miniCart);
+                    })
+                }
+            })
+        }
+        miniCart();
+        //remove cart
+        function removeCart(rowId) {
+            console.log(rowId);
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/remove/cart/' + rowId,
+                success: function(key) {
+                    miniCart();
 
+                    if ($.isEmptyObject(key.error)) {
+                        var color = 'successWish';
+                    noticeAler(color,key.success)
+                    } else {
+                        var color = 'failWish';
+                    noticeAler(color,key.error);
+                    }
+
+                }
+            })
+        }
+    </script>
+    <script>
+        function noticeAler(color,content){
+
+                 $('.notice').removeClass('successWish');
+                 $('.notice').removeClass('failWish');
+                $('.notice').text(content);
+                $('.notice').addClass('actives');
+                $('.notice').addClass(color); //background
+                setTimeout(() => {
+                    $('.notice').removeClass('actives');
+                }, 4000)
+
+        }
+    </script>
+
+    <script>
+        function addToWishList(id){
+            $.ajax({
+                type : 'POST',
+                dataType : 'json',
+                url : '/add/wishlist/'+id,
+                success : function (data) {
+
+                   if(data.success){
+                       var color = 'successWish';
+                    noticeAler(color,data.success)
+                   }
+                   else{
+                    var color = 'failWish';
+                    noticeAler(color,data.error);
+                   }
+                 }
+            })
+        }
+    </script>
+
+    <script>
+        function getWishlish(){
+            $.ajax({
+                type : 'GET',
+                dataType : 'json',
+                url : '/get/wishlish/',
+                success : function(data){
+                    console.log(data)
+                    var key = '';
+                    $.each(data,function(k,val){
+                        key+= `<tr>
+					<td class="col-md-3 col-sm-6 col-xs-6"><img style="width : 200px;height:200px" src="/${val.product.product_thambnail}" alt="imga"></td>
+					<td class="col-md-7 col-sm-6 col-xs-6">
+						<div class="product-name"><a href="#" class="titlees">${val.product.product_name_en}</a></div>
+						<div class="rating">
+							<i class="fa fa-star rate"></i>
+							<i class="fa fa-star rate"></i>
+							<i class="fa fa-star rate"></i>
+							<i class="fa fa-star rate"></i>
+							<i class="fa fa-star non-rate"></i>
+							<span class="review">( 06 Reviews )</span>
+                            <input class="inputhiden" value='${val.product.id}' type="hidden">
+                            <input class="qtyys" value='1' type="hidden">
+
+
+
+						</div>
+						<div class="price">
+						${val.product.discount_price}
+							<span>	${val.product.selling_price}</span>
+						</div>
+					</td>
+
+
+					<td class="col-md-1 ">
+						<button data-toggle="modal"data-target="#exampleModal" id="${val.product.id}" onclick="productview(this.id)" class="btn-upper btn btn-primary"><i class="fa fa-shopping-cart"></i> </button>
+					</td>
+
+
+					<td class="col-md-1 close-btn">
+						<a href="#" class=""><i class="fa fa-times"></i></a>
+					</td>
+				</tr>`;
+
+                $('.tbody').html(key);
+                    })
+                }
+            })
+        }
+
+        getWishlish();
+    </script>
 </body>
-
+            <!-- var product_id = $('.inputhiden').val();
+            var product_name = $('.titlees').text();
+            var color = $('.selectcolor option:selected').text();
+            var size = $('.selectsize option:selected').text();
+            var quantity = $('.qtyys').val(); -->
 </html>

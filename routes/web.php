@@ -7,8 +7,10 @@ use App\Http\Controllers\brand\BrandController;
 use App\Http\Controllers\Frontend;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\slider\SliderController;
+use App\Http\Controllers\user\WishLishController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users;
+use App\Models\WishList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -137,3 +139,8 @@ Route::get('/subcategories/product/{slugs}',[Frontend::class,'subcategoriess'])-
 Route::get('/product/modal/{id}',[Frontend::class,'product_modal']);
 Route::post('/product/add/cart',[Frontend::class,'product_addCart']);
 Route::get('/minicart',[Frontend::class,'miniCart']);
+Route::get('/remove/cart/{rowId}',[Frontend::class,'removeCart']);
+
+Route::get('/wishlist',[WishLishController::class,'wishlist'])->name('wishlist');
+Route::post('/add/wishlist/{id}',[WishLishController::class,'Addwishlist']);
+Route::get('/get/wishlish',[WishLishController::class,'Getwishlist']);

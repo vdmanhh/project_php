@@ -117,7 +117,7 @@
 }
 .colorstatus{
     padding: 4px;
-    background-color: darkorange;
+    background-color: rgb(60, 255, 0);
     border-radius: 10px;
 }
 .colorstatusOut{
@@ -132,6 +132,14 @@
 }
 .hoa{
     text-transform: capitalize;
+}
+.successWish{
+    background-color:rgb(23, 189, 17);
+    position:fixed;
+}
+.failWish{
+    background-color:rgb(189, 71, 17);
+    position:fixed;
 }
 /* @if(session()->get('language') == 'korean')
 {{$product->product_name_hin}}
