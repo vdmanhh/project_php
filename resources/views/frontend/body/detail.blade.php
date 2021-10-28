@@ -193,7 +193,7 @@
                                     <form action="">
                                     <div class="row rww">
 
-                                        <div class="coll" style="margin-left:10px" width='50%'>
+                                        <div class="coll" style="margin-left:10px" style="width: 200px;">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Select Color</label>
                                                 <select class="form-control selectcolor" id="exampleFormControlSelect1">
@@ -205,9 +205,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="coll"  width='50%'>
-                                            @if($new_size == '')
+
+                                            @if($product->product_size_en == null)
                                             @else
+                                            <div class="coll"  style="width: 200px;">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Select Size</label>
                                                 <select class="form-control selectsize" id="exampleFormControlSelect1">
@@ -217,11 +218,12 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            </div>
                                             @endif
 
-                                        </div>
 
-                                        <input type="number" class="qtyys" value="1">
+
+                                        <input type="number"  style="width: 200px;height: 34px;transform:translateY(21px)" class="qtyys form-control" value="1">
                                     </div><!-- /.row -->
                                     <div class="add-btn" style="transform: translateX(-20px);">
                                             <button type="button" onclick="addToCart()" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO

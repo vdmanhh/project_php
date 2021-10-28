@@ -8,15 +8,13 @@
                     <ul class="list-unstyled">
                         <li class="myaccount"><a href="#"><span>My Account</span></a></li>
                         <li class="wishlist"><a href="{{route('wishlist')}}"><span>Wishlist</span></a></li>
-                        <li class="header_cart hidden-xs"><a href="#"><span>My Cart</span></a></li>
+                        <li class="header_cart hidden-xs"><a href="{{route('carts')}}"><span>My Cart</span></a></li>
                         <li class="check"><a href="#"><span>Checkout</span></a></li>
                         @auth
                         <li class="login"><a href="{{route('user.info')}}"><span>User</span></a></li>
                         @else
                         <li class="login"><a href="{{route('login')}}"><span>Login/Register</span></a></li>
                         @endauth
-
-
                     </ul>
                 </div>
                 <!-- /.cnt-account -->

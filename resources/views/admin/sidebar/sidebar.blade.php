@@ -75,27 +75,38 @@ $route = Route::current()->getName();
 
 
 
-    <li class="nav-item {{$prefix == '/slider' ? 'activess' : ''}}" >
+    <li class="nav-item {{$prefix == '/ship' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true" aria-controls="collapsePage">
             <i class="fas fa-fw fa-columns"></i>
-            <span>Slider</span>
+            <span>Manager Ship</span>
         </a>
         <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
-                <a class="collapse-item" href="{{route('slider')}}">All Slider</a>
-
+                <a class="collapse-item" href="{{route('ship')}}">Shipping</a>
+                <a class="collapse-item" href="{{route('district')}}">District</a>
+                <a class="collapse-item" href="{{route('state')}}">State Ship</a>
             </div>
+
         </div>
     </li>
 
 
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+
+    <li class="nav-item {{$prefix == '/coupon' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('coupon')}}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span>
+            <span>Coupon</span>
         </a>
     </li>
+    <li class="nav-item {{$prefix == '/slider' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('slider')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Slider</span>
+        </a>
+    </li>
+
+
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
 </ul>

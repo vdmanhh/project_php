@@ -8,6 +8,7 @@ use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class Frontend extends Controller
 {
@@ -68,6 +69,10 @@ class Frontend extends Controller
     }
 
     public function product_addCart(Request $request){
+
+        if(Session::has('coupon')){
+            Session::forget('coupon');
+        }
         $product  = Product::find($request->id);
         if($product->discount_price == NULL){
             Cart::add( [

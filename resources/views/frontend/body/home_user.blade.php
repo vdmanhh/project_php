@@ -300,10 +300,10 @@
 
                     if ($.isEmptyObject(datas.error)) {
                         var color = 'successWish';
-                    noticeAler(color,datas.success)
+                        noticeAler(color, datas.success)
                     } else {
                         var color = 'failWish';
-                    noticeAler(color,datas.error);
+                        noticeAler(color, datas.error);
                     }
                 }
             })
@@ -351,10 +351,10 @@
 
                     if ($.isEmptyObject(key.error)) {
                         var color = 'successWish';
-                    noticeAler(color,key.success)
+                        noticeAler(color, key.success)
                     } else {
                         var color = 'failWish';
-                    noticeAler(color,key.error);
+                        noticeAler(color, key.error);
                     }
 
                 }
@@ -362,52 +362,51 @@
         }
     </script>
     <script>
-        function noticeAler(color,content){
+        function noticeAler(color, content) {
 
-                 $('.notice').removeClass('successWish');
-                 $('.notice').removeClass('failWish');
-                $('.notice').text(content);
-                $('.notice').addClass('actives');
-                $('.notice').addClass(color); //background
-                setTimeout(() => {
-                    $('.notice').removeClass('actives');
-                }, 4000)
+            $('.notice').removeClass('successWish');
+            $('.notice').removeClass('failWish');
+            $('.notice').text(content);
+            $('.notice').addClass('actives');
+            $('.notice').addClass(color); //background
+            setTimeout(() => {
+                $('.notice').removeClass('actives');
+            }, 4000)
 
         }
     </script>
 
     <script>
-        function addToWishList(id){
+        function addToWishList(id) {
             $.ajax({
-                type : 'POST',
-                dataType : 'json',
-                url : '/add/wishlist/'+id,
-                success : function (data) {
+                type: 'POST',
+                dataType: 'json',
+                url: '/add/wishlist/' + id,
+                success: function(data) {
 
-                   if(data.success){
-                       var color = 'successWish';
-                    noticeAler(color,data.success)
-                   }
-                   else{
-                    var color = 'failWish';
-                    noticeAler(color,data.error);
-                   }
-                 }
+                    if (data.success) {
+                        var color = 'successWish';
+                        noticeAler(color, data.success)
+                    } else {
+                        var color = 'failWish';
+                        noticeAler(color, data.error);
+                    }
+                }
             })
         }
     </script>
 
     <script>
-        function getWishlish(){
+        function getWishlish() {
             $.ajax({
-                type : 'GET',
-                dataType : 'json',
-                url : '/get/wishlish/',
-                success : function(data){
+                type: 'GET',
+                dataType: 'json',
+                url: '/wishlist/get/wishlish/',
+                success: function(data) {
                     console.log(data)
                     var key = '';
-                    $.each(data,function(k,val){
-                        key+= `<tr>
+                    $.each(data, function(k, val) {
+                        key += `<tr>
 					<td class="col-md-3 col-sm-6 col-xs-6"><img style="width : 200px;height:200px" src="/${val.product.product_thambnail}" alt="imga"></td>
 					<td class="col-md-7 col-sm-6 col-xs-6">
 						<div class="product-name"><a href="#" class="titlees">${val.product.product_name_en}</a></div>
@@ -437,11 +436,11 @@
 
 
 					<td class="col-md-1 close-btn">
-						<a href="#" class=""><i class="fa fa-times"></i></a>
+						<button type='button' id='${val.id}'onclick='removeWish(this.id)' class=""><i class="fa fa-times"></i></button>
 					</td>
 				</tr>`;
 
-                $('.tbody').html(key);
+                        $('.tbody').html(key);
                     })
                 }
             })
@@ -449,10 +448,280 @@
 
         getWishlish();
     </script>
+
+    <script>
+        function removeWish(id) {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "/wishlist/remove/wishlist/" + id,
+                success: function(key) {
+                    getWishlish();
+
+                    if (key.success) {
+                        var color = 'successWish';
+                        noticeAler(color, key.success)
+                    } else {
+                        var color = 'failWish';
+                        var contend = 'Remove wishlist was fail';
+                        noticeAler(color, contend);
+                    }
+                    getWishlish();
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function getCarts() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/get/cart/user/',
+                success: function(data) {
+                    console.log(data);
+                    var rows = '';
+                    $.each(data.carts, function(k, val) {
+                        rows += ` <tr>
+
+                            <td class="cart-image">
+                                <a class="entry-thumbnail" href="detail.html">
+                                    <img style="width:80px;height:80px" src="/${val.options.image}" alt="">
+                                </a>
+                            </td>
+                            <td class="cart-product-name-info" style="width:20%">
+                                <h4 class='cart-product-description'><a href="detail.html">${val.name}</a></h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="rating rateit-small"></div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="reviews">
+                                            (06 Reviews)
+                                        </div>
+                                    </div>
+                                </div><!-- /.row -->
+
+                            </td>
+
+                            <td class="cart-product-edit"><p class="product-edit">${val.options.color}</p></td>
+
+                            <td class="cart-product-quantity">
+                              ${val.qty >1 ?`
+                                <button type="button"  id='${val.rowId}' onclick='cartDecre(this.id)' class="btn btn-danger">-</button>
+                                `:`
+                                <button type="button" disabled class="btn btn-danger">-</button>
+                                `}
+
+                                <input style="width: 30px;text-align:center" type="number" disabled value="${val.qty}">
+                                <button type="button" id='${val.rowId}' onclick='cartIncre(this.id)' class="btn btn-success">+</button>
+                            </td>
+                            <td class="cart-product-sub-total"><span class="cart-sub-total-price">
+                            ${val.options.size == null ? `...` : `${val.options.size}`}
+
+                            </span></td>
+                            <td class="cart-product-grand-total"><span class="cart-grand-total-price">${val.subtotal} $</span></td>
+                            <td class="romove-item"><button type="button" title="cancel" id='${val.rowId}' onclick='removeCartUser(this.id)' class="btn btn-info">Delete</button></td>
+                            </tr>`;
+
+                            $('.tbodycartss').html(rows);
+                    })
+                }
+            })
+        }
+        getCarts()
+    </script>
+
+    <script>
+        function removeCartUser(rowId){
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "/remove/cart-user/" + rowId,
+                success: function(key) {
+                    getCarts()
+                    miniCart();
+                    getValCoupon()
+                    $('.tablecoupon').show();
+                    if (key.success) {
+                        var color = 'successWish';
+                        noticeAler(color, key.success)
+                    } else {
+                        var color = 'failWish';
+                        var contend = 'Remove cart was fail';
+                        noticeAler(color, contend);
+                    }
+
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function cartDecre(rowId){
+                $.ajax({
+                    type :'GET',
+                    dataType:'json',
+                    url : '/decre/cart/'+rowId,
+                    success :function(data){
+                        getCarts()
+                    miniCart();
+                    getValCoupon()
+                    }
+                })
+        }
+        function cartIncre(rowId){
+            $.ajax({
+                    type :'GET',
+                    dataType:'json',
+                    url : '/incre/cart/'+rowId,
+                    success :function(data){
+                        getCarts()
+                    miniCart();
+                    getValCoupon()
+                    }
+                })
+        }
+    </script>
+
+    <script>
+        function checkCoupon(){
+                var val = $('.couponval').val();
+                if(val==''){
+                    var color = 'failWish';
+                        var contend = 'You need to enter the discount code ';
+                        noticeAler(color, contend);
+                }else{
+                    $.ajax({
+                       type :'POST',
+                       dataType:'json',
+                       data:{
+                           'coupon_name' : val
+                       },
+                       url:'/check/coupon/',
+                       success:function(data){
+                        getValCoupon();
+
+                        if (data.success) {
+                        var color = 'successWish';
+                        noticeAler(color, data.success)
+                        $('.tablecoupon').hide();
+                             } else {
+                        var color = 'failWish';
+                        var contend = 'Remove cart was fail';
+                        noticeAler(color, data.error);
+                        $('.couponval').val('');
+                    }
+                       }
+                    })
+                }
+        }
+
+
+        function getValCoupon(){
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url:'/get/coupon/total',
+                success:function(key){
+                    var bien =''
+                    console.log(key);
+                    if(key.subTotal){
+                        bien += `<table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="cart-sub-total">
+                                                Subtotal<span class="inner-left-md">$${key.subTotal}</span>
+                                            </div>
+                                            <div class="cart-grand-total">
+                                                Grand Total<span class="inner-left-md">$${key.subTotal}</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead><!-- /thead -->
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="cart-checkout-btn pull-right">
+                                                <a href="{{route('checkout')}}"><button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button></a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </tbody><!-- /tbody -->
+                            </table><!-- /table -->`
+
+                            $('.usbbbtotal').html(bien);
+                    }else{
+                        bien += `<table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="cart-sub-total">
+                                                Subtotal<span class="inner-left-md">$${key.total_sub}</span>
+                                            </div>
+                                            <div class="cart-sub-total">
+                                                <span style='padding-right:19px'>Name Coupon</span><span class="inner-left-md">${key.coupon_name}</span>
+                                                <button class='btn btn-danger'type='button' onclick='removerCoupon()'>X</button>
+                                            </div>
+                                            <div class="cart-sub-total">
+                                            <span class="inner-left-md"style='padding-right:66px'>Discount</span><span class="inner-left-md">${key.discount} %</span>
+                                            </div>
+                                            <div class="cart-sub-total">
+                                            Discount Mount<span class="inner-left-md">- $${key.discount_mount}</span>
+                                            </div>
+                                            <div class="cart-grand-total">
+                                                Grand Total<span class="inner-left-md">$${key.total_mount}</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead><!-- /thead -->
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="cart-checkout-btn pull-right">
+                                                <a href="{{route('checkout')}}"><button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button></a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </tbody><!-- /tbody -->
+                            </table><!-- /table -->`
+
+                            $('.usbbbtotal').html(bien);
+                    }
+                }
+            })
+        }
+
+        getValCoupon();
+
+        function removerCoupon(){
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "/remove/couponss/",
+                success: function(keys) {
+              $('.tablecoupon').show();
+                     getValCoupon();
+                     $('.couponval').val('');
+                    if (keys.success) {
+                        var color = 'successWish';
+                        noticeAler(color, keys.success)
+                    } else {
+                        var color = 'failWish';
+                        var error = 'Remove coupon was fail';
+                        noticeAler(color,error);
+                    }
+
+                }
+            })
+        }
+    </script>
+
+
 </body>
-            <!-- var product_id = $('.inputhiden').val();
-            var product_name = $('.titlees').text();
-            var color = $('.selectcolor option:selected').text();
-            var size = $('.selectsize option:selected').text();
-            var quantity = $('.qtyys').val(); -->
+
+
 </html>

@@ -17,7 +17,7 @@
 
 
         <div class="form-group">
-            <label for="exampleInputPassword1">New Password</label>
+            <label for="exampleInputPassword1">Name category hin</label>
             <input value="{{$category->category_name_hin}}" name="category_name_hin" type="text" class="form-control" id="exampleInputPassword1" placeholder="brand_name_hin">
         </div>
         @error('category_name_hin')
@@ -25,7 +25,7 @@
         @enderror
 
         <div class="form-group">
-            <label for="exampleInputPassword1">New Password</label>
+            <label for="exampleInputPassword1">Icoin</label>
             <input value="{{$category->category_icon}}" name="category_icon" type="text" class="form-control" id="exampleInputPassword1" placeholder="brand_name_hin">
         </div>
         @error('category_icon')

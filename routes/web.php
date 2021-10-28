@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\admin\category\CategoryController;
+use App\Http\Controllers\admin\coupon\CouponController;
+use App\Http\Controllers\admin\shipping\ShipController;
 use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
 use App\Http\Controllers\brand\BrandController;
 use App\Http\Controllers\Frontend;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\slider\SliderController;
+use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\WishLishController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users;
@@ -141,6 +144,64 @@ Route::post('/product/add/cart',[Frontend::class,'product_addCart']);
 Route::get('/minicart',[Frontend::class,'miniCart']);
 Route::get('/remove/cart/{rowId}',[Frontend::class,'removeCart']);
 
-Route::get('/wishlist',[WishLishController::class,'wishlist'])->name('wishlist');
+
+//wishlist
 Route::post('/add/wishlist/{id}',[WishLishController::class,'Addwishlist']);
-Route::get('/get/wishlish',[WishLishController::class,'Getwishlist']);
+Route::group(['prefix'=>'wishlist','middleware'=>['auth','usercheck']],function(){
+    Route::get('/wishlist',[WishLishController::class,'wishlist'])->name('wishlist');
+
+    Route::get('/get/wishlish',[WishLishController::class,'Getwishlist']);
+    Route::get('/remove/wishlist/{id}',[WishLishController::class,'Remove']);
+});
+
+
+//cart
+Route::get('/carts',[CartController::class,'Carts'])->name('carts');
+Route::get('/get/cart/user',[CartController::class,'getCarts']);
+Route::get('/remove/cart-user/{rowId}',[CartController::class,'removeCarts']);
+Route::get('/decre/cart/{rowId}',[CartController::class,'DecreCart']);
+Route::get('/incre/cart/{rowId}',[CartController::class,'IncreCart']);
+
+
+///coupon
+
+Route::group(['prefix'=>'coupon','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/coupon',[CouponController::class,'coupon'])->name('coupon');
+     Route::post('/coupon/add',[CouponController::class,'couponAdd'])->name('add.coupon');
+     Route::get('/coupon/edit/{id}',[CouponController::class,'couponEdit'])->name('coupon.edit');
+     Route::post('/coupon/update/{id}',[CouponController::class,'couponUpdate'])->name('update.coupon');
+     Route::get('/coupon/delete/{id}',[CouponController::class,'couponDelete'])->name('coupon.delete');
+});
+//shipping
+
+Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/ship',[ShipController::class,'coupon'])->name('ship');
+    Route::post('/ship/division/add',[ShipController::class,'AddDivision'])->name('add.division');
+    Route::get('/ship/division/edit/{id}',[ShipController::class,'divisionEdit'])->name('division.edit');
+    Route::post('/ship/division/update/{id}',[ShipController::class,'update_division'])->name('update.division');
+    Route::get('/ship/division/delete/{id}',[ShipController::class,'division_delete'])->name('division.delete');
+});
+//district
+Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/district',[ShipController::class,'district'])->name('district');
+    Route::post('/district/add',[ShipController::class,'Adddistrict'])->name('add.district');
+    Route::get('/district/edit/{id}',[ShipController::class,'districtEdit'])->name('district.edit');
+    Route::post('/district/update/{id}',[ShipController::class,'districtUpdate'])->name('update.district');
+    Route::get('/district/delete/{id}',[ShipController::class,'deleteDis'])->name('district.delete');
+
+    //state
+    Route::get('/state',[ShipController::class,'state'])->name('state');
+    Route::post('/state/add',[ShipController::class,'Addstate'])->name('add.state');
+    Route::get('/state/edit/{id}',[ShipController::class,'Editstate'])->name('state.edit');
+    Route::get('/state/delete/{id}',[ShipController::class,'deletestate'])->name('state.delete');
+    Route::post('/state/update/{id}',[ShipController::class,'Updatestate'])->name('update.state');
+});
+
+//applicant coupon
+Route::post('/check/coupon',[CartController::class,'checkCoupon']);
+Route::get('/get/coupon/total',[CartController::class,'getTotalCoupon']);
+Route::get('/remove/couponss',[CartController::class,'removeCoupon']);
+Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');

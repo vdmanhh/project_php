@@ -48,4 +48,9 @@ class WishLishController extends Controller
 
 
     }
+
+    public function Remove($id){
+        WishList::find($id)->delete();
+        return response()->json(['success'=>'Remove wishlist was successfully']);
+    }
 }
