@@ -4,6 +4,9 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\District;
+use App\Models\Division;
+use App\Models\State;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -123,8 +126,8 @@ class CartController extends Controller
             $carts = Cart::content();
             $cartQty = Cart::count();
             $cartTotal = Cart::total();
-
-            return view('frontend.body.checkout',compact('carts','cartQty','cartTotal'));
+            $divsions = Division::get();
+            return view('frontend.body.checkout',compact('carts','cartQty','cartTotal','divsions'));
         }else{
 
             $notice = array(
@@ -143,5 +146,44 @@ class CartController extends Controller
         );
         return Redirect()->back()->with($notice);
      }
+    }
+
+    public function getDis($id){
+        $districts = District::where('division_id',$id)->get();
+        return response()->json($districts);
+    }
+
+    public function getState($id){
+        $states = State::where('district_id',$id)->get();
+        return response()->json($states);
+    }
+
+
+    //checkout
+    public function FormCheckout(Request $request){
+
+        $data = array(
+            'shipping_name' => $request->shipping_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'post_code' => $request->post_code,
+            'division_id' => $request->division_id,
+            'district_id' => $request->district_id,
+            'state_id' => $request->state_id,
+            'notes' => $request->notes,
+            'payment_method' => $request->payment_method,
+        );
+        $cartTotal = Cart::total();
+
+
+        if($request->payment_method == 'stripe'){
+            return view('frontend.body.order',compact('data','cartTotal'));
+        }
+        elseif($request->payment_method == 'cart'){
+            return 'cart';
+
+        }else{
+            return view('frontend.body.cash',compact('cartTotal'));
+        }
     }
 }

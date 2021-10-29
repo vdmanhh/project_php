@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/bootstrap.min.css')}}">
 
     <!-- Customizable CSS -->
-
+    <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="{{asset('frontend/assets/css/main.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/blue.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/owl.carousel.css')}}">
@@ -719,7 +719,48 @@
             })
         }
     </script>
+    <script>
+     $(document).ready(function () {
+        $('select[name="division_id"]').on('change',function(){
+                var val = $(this).val();
+           $.ajax({
+               type : 'GET',
+               dataType:'json',
+               url : '/get/districts/'+val,
+               success : function(data){
 
+                   var a = '';
+                   $('select[name="state_id"]').empty();
+                   $('select[name="district_id"]').empty();
+                   $.each(data,function(key,vl){
+
+            $('select[name="district_id"]').append(`<option value="${vl.id}" >${vl.district_name} </option>`)
+                   })
+               }
+           })
+        })
+
+
+
+        $('select[name="district_id"]').on('change',function(){
+                var val = $(this).val();
+           $.ajax({
+               type : 'GET',
+               dataType:'json',
+               url : '/get/states/'+val,
+               success : function(data){
+
+                   var a = '';
+                   $('select[name="state_id"]').empty();
+                   $.each(data,function(key,vl){
+
+                       $('select[name="state_id"]').append( `<option value="${vl.id}" >${vl.state_name} </option>`)
+                   })
+               }
+           })
+        })
+     });
+    </script>
 
 </body>
 

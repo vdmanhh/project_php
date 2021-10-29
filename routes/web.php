@@ -205,3 +205,15 @@ Route::post('/check/coupon',[CartController::class,'checkCoupon']);
 Route::get('/get/coupon/total',[CartController::class,'getTotalCoupon']);
 Route::get('/remove/couponss',[CartController::class,'removeCoupon']);
 Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');
+Route::get('/get/districts/{id}',[CartController::class,'getDis']);
+Route::get('/get/states/{id}',[CartController::class,'getState']);
+
+
+
+///checkout
+
+ Route::group(['prefix'=>'checkout','middleware'=>['auth','usercheck']],function(){
+
+    Route::post('/form/checkout',[CartController::class,'FormCheckout'])->name('form.checkout');
+
+});
