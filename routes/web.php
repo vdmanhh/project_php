@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\category\CategoryController;
 use App\Http\Controllers\admin\coupon\CouponController;
+use App\Http\Controllers\admin\order\OrderController;
 use App\Http\Controllers\admin\shipping\ShipController;
 use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
@@ -62,6 +63,13 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/update/profilesuser',[Users::class,'userUpdate'])->name('update.profileuser');
     Route::get('/pass/profilesuser',[Users::class,'userUpdatePass'])->name('user.changespass');
     Route::post('/pass/profilesuser',[Users::class,'finalChangePass'])->name('changepasss.user');
+    Route::get('/order-users',[Users::class,'userOrderss'])->name('user.orderss');
+    Route::get('/detail/order/{id}',[Users::class,'DetailOrderss']);
+    Route::get('/download/order/{id}',[Users::class,'DownloadOrderss'])->name('download');
+    Route::post('/return/order/{id}',[Users::class,'returnOrder'])->name('return');
+    Route::get('/download/order/admin/{id}',[Users::class,'DownloadOrderssAdmin'])->name('download.admin');
+    Route::get('/return/order/user',[Users::class,'return_user'])->name('return.user');
+    Route::get('/cancel/order/user',[Users::class,'cancel_user'])->name('cancel.user');
 });
 
 //category
@@ -215,5 +223,25 @@ Route::get('/get/states/{id}',[CartController::class,'getState']);
  Route::group(['prefix'=>'checkout','middleware'=>['auth','usercheck']],function(){
 
     Route::post('/form/checkout',[CartController::class,'FormCheckout'])->name('form.checkout');
+    Route::post('/orders',[CartController::class,'orders'])->name('orders');
+});
+
+//admin order
+Route::group(['prefix'=>'orders','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/pending',[OrderController::class,'OrderPending'])->name('order.pending');
+    Route::get('/processing',[OrderController::class,'OrderProcess'])->name('order.processing');
+    Route::get('/transfer',[OrderController::class,'OrderTransfer'])->name('order.transfer');
+    Route::get('/delevery',[OrderController::class,'Orderdelevery'])->name('order.delevery');
+    Route::get('/cancel',[OrderController::class,'OrderCacel'])->name('order.cancel');
+    Route::get('/detail/order/admin/{id}',[OrderController::class,'OrderDetail'])->name('detail.order.admin');
+    Route::post('/change/order/{id}',[OrderController::class,'OrderChange'])->name('change.orders');
+
+});
+
+///  manager
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/all/users',[Users::class,'AllUsers'])->name('user.alls');
 
 });

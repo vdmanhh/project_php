@@ -83,7 +83,7 @@
             <!-- /.row -->
             <div class="col-xs-6 col-sm-6 col-md-6 sidebar " style="width: 50%;background:white">
                     <h3>Stripe Payment</h3>
-                <form action="" method="post" id="payment-form">
+                <form action="{{route('orders')}}" method="post" id="payment-form">
                     @csrf
                     <div class="form-row">
                         <label for="card-element">

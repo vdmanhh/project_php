@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as AuthUser;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -22,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'status'
     ];
 
     /**
@@ -46,5 +48,9 @@ class User extends Authenticatable
 
     public function getType(){
         return 'manhducvu123';
+    }
+
+    public function UserOnline(){
+        return Cache::has('user-is-online' . $this->id);
     }
 }

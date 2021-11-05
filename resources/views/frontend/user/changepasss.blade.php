@@ -2,17 +2,9 @@
 
 @section('home')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<div class="container" style="width: 70%; margin:auto; padding:50px;margin-top:50px;margin-bottom:70px;background:white">
+<div class="container" style="width: 90%; margin:auto; padding:50px;margin-top:50px;margin-bottom:70px;background:white">
 
-    <div class="col-4" style="float: left; width:40%">
-        <img class="showimage" src=" {{(!empty($user->avatar))? url('upload/user/'.$user->avatar):
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU'}}" alt="">
-        <ul class="uluser">
-            <li class="liuser"><a class="auser" href="{{route('user.info')}}">Profile</a></li>
-            <li class="liuser"><a class="auser" href="{{route('user.changespass')}}"> Change pass</a></li>
-            <li class="liuser"><a class="auser" href="{{route('logout')}}">Log out</a> </li>
-        </ul>
-    </div>
+@include('frontend.user.sidebar_user')
     <div class="col-8" style='width : 60%;float:right;'>
         <h2 style="text-align: center;font-weight:bold">Change password User</h2>
         <form action="{{route('changepasss.user')}}" method="POST" enctype="multipart/form-data">

@@ -41,16 +41,19 @@ $route = Route::current()->getName();
 
 
 
-    <li class="nav-item  {{$prefix == '/brand' ? 'activess' : ''}}">
+    <li class="nav-item  {{$prefix == '/orders' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true" aria-controls="collapseForm">
             <i class="fab fa-fw fa-wpforms"></i>
-            <span>Brand</span>
+            <span>Order</span>
         </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
-                <a class="collapse-item" href="{{route('brand')}}">All brand</a>
-
+                <a class="collapse-item" href="{{route('order.pending')}}">Pending Order</a>
+                <a class="collapse-item" href="{{route('order.processing')}}">Processing Order</a>
+                <a class="collapse-item" href="{{route('order.transfer')}}">Transfer Order</a>
+                <a class="collapse-item" href="{{route('order.delevery')}}">Deleveried Order</a>
+                <a class="collapse-item" href="{{route('order.cancel')}}">Cancel Order</a>
             </div>
         </div>
     </li>
@@ -99,10 +102,23 @@ $route = Route::current()->getName();
             <span>Coupon</span>
         </a>
     </li>
+    <li class="nav-item {{$prefix == '/brand' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('brand')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Brand</span>
+        </a>
+    </li>
+
     <li class="nav-item {{$prefix == '/slider' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('slider')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Slider</span>
+        </a>
+    </li>
+    <li class="nav-item {{$prefix == '/user' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('user.alls')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Manager User</span>
         </a>
     </li>
 
