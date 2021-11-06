@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\slider\SliderController;
 use App\Http\Controllers\user\CartController;
+use App\Http\Controllers\user\Commment;
 use App\Http\Controllers\user\WishLishController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users;
@@ -237,11 +238,24 @@ Route::group(['prefix'=>'orders','middleware'=>['auth','checkauth']],function(){
     Route::get('/detail/order/admin/{id}',[OrderController::class,'OrderDetail'])->name('detail.order.admin');
     Route::post('/change/order/{id}',[OrderController::class,'OrderChange'])->name('change.orders');
 
+
 });
 
 ///  manager
 Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
 
     Route::get('/all/users',[Users::class,'AllUsers'])->name('user.alls');
+
+});
+
+
+Route::post('/add/comment',[Commment::class,'Comment'])->name('add.comment');
+//// admin return prder
+Route::group(['prefix'=>'return','middleware'=>['auth','checkauth']],function(){
+
+    Route::get('/return',[Commment::class,'OrderReturn'])->name('order.returns');
+    Route::get('/accept/return/{id}',[Commment::class,'Orderaccept'])->name('accept');
+
+
 
 });

@@ -121,6 +121,12 @@ $route = Route::current()->getName();
             <span>Manager User</span>
         </a>
     </li>
+    <li class="nav-item {{$prefix == '/return' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('order.returns')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Return Order</span>
+        </a>
+    </li>
 
 
     <hr class="sidebar-divider">

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\admin\order;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Support\Facades\Redirect;
+use DB;
 class OrderController extends Controller
 {
     //
@@ -50,6 +52,11 @@ class OrderController extends Controller
             return Redirect()->route('order.processing')->with($notice);
         }
         elseif($order->status == 'transfer'){
+        $product = OrderItem::where('order_id',$id)->get();
+        foreach($product as $key){
+            Product::where('id',$key->product_id)->update(['product_qty'=>DB::raw('product_qty-'.$key->qty)]);
+        }
+
             Order::find($id)->update([
                 'status'=>$request->change
             ]);

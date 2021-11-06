@@ -138,6 +138,7 @@ class Users extends Controller
 
         Order::where('id',$id)->update([
                 'return_reason'=>$request->return,
+                'return_order'=>0,
                 'return_date' =>Carbon::now(),
         ]);
         $notice = array(
@@ -149,9 +150,9 @@ class Users extends Controller
 
 
     public function return_user(){
-        $detail = Order::where('user_id', Auth::id())->where('return_reason','!=',NULL)->first();
-        $orderItem = OrderItem::where('order_id',$detail->id)->get();
-        return view('frontend.user.return_user',compact('orderItem'));
+        $detail = Order::where('user_id', Auth::id())->where('return_reason','!=',NULL)->get();
+
+        return view('frontend.user.return_user',compact('detail'));
     }
 
     public function cancel_user(){

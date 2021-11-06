@@ -14,28 +14,31 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"> Image</th>
-                            <th scope="col">Product Name</th>
+                        <th style="text-align: center;" scope="col">STT</th>
+                        <th style="text-align: center;" scope="col">Date</th>
+                    <th style="text-align: center;"scope="col">Total</th>
+                    <th style="text-align: center;"scope="col">Payment</th>
+                    <th style="text-align: center;"scope="col">Invoice</th>
 
-                            <th scope="col">Color</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Quantity</th>
-
-                            <th scope="col">Price </th>
-                            <th scope="col">Status</th>
+                    <th style="text-align: center;"scope="col" >Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($orderItem as $item)
+                    @php($id=1)
+                        @foreach($detail as $key)
                         <tr>
-                            <th ><img style="height: 100px;width: 100px;" src="{{asset($item->product->product_thambnail)}}" alt=""></th>
-                            <td width='20%'>{{$item->product->product_name_en}}</td>
-                            <td>{{$item->color}}</td>
-                            <td>{{$item->size}}</td>
-                            <td>{{$item->qty}}</td>
-                            <td>{{$item->price}} $</td>
-                            <td class=""><span  style="background-color: brown;color:white;padding:10px 10px;border-radius:10px">Return Order</span></td>
+                        <th scope="row">{{$id++}}</th>
+                    <td>{{$key->order_date}}</td>
+                    <td>{{$key->amount}} $</td>
+                    <td>{{$key->payment_type}}</td>
+                    <td>{{$key->invoice_no}}</td>
 
+                            @if($key->return_order != 0)
+                            <td class=""><span  style="background-color: green;color:white;padding:10px 10px;border-radius:10px">Return order Successfully</span></td>
+
+                            @else
+                            <td class=""><span  style="background-color: brown;color:white;padding:10px 10px;border-radius:10px">Waiting processing...</span></td>
+                             @endif
                         </tr>
                         @endforeach
                     </tbody>
