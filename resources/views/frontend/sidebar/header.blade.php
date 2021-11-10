@@ -6,7 +6,10 @@
             <div class="header-top-inner">
                 <div class="cnt-account">
                     <ul class="list-unstyled">
-                        <li class="myaccount"><a href="#"><span>My Account</span></a></li>
+                        @auth
+                        <li class="myaccount" style="cursor: pointer;color:white" data-toggle="modal" data-target="#tracking"><span>My Tracking</span></li>
+                        @else
+                        @endauth
                         <li class="wishlist"><a href="{{route('wishlist')}}"><span>Wishlist</span></a></li>
                         <li class="header_cart hidden-xs"><a href="{{route('carts')}}"><span>My Cart</span></a></li>
                         <li class="check"><a href="#"><span>Checkout</span></a></li>
@@ -66,7 +69,8 @@
                     <!-- /.contact-row -->
                     <!-- ============================================================= SEARCH AREA ============================================================= -->
                     <div class="search-area">
-                        <form>
+                        <form action="{{route('search')}}" method="POST">
+                            @csrf
                             <div class="control-group">
                                 <ul class="categories-filter animate-dropdown">
                                     <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
@@ -79,12 +83,26 @@
                                         </ul>
                                     </li>
                                 </ul>
-                                <input class="search-field" placeholder="Search here..." />
-                                <a class="search-button" href="#"></a>
+                                <input onfocus="search_result_show()" onblur="search_result_hide()" class="search-field" id="searchs" name="search" placeholder="Search here..." />
+                                <button type="submit" class="search-button">Search</button>
+                                <!-- <a class="search-button" href="#"></a> -->
                             </div>
                         </form>
+
+
                     </div>
                     <!-- /.search-area -->
+                    <div id="searchProducts" style="background-color: white;position: absolute;z-index: 99;width: 99%;margin-top: 10px;border-radius: 15px ;">
+                            <div class="container mt-5">
+                                <div class="row d-flex justify-content-center ">
+                                    <div class="col-md-6">
+                                        <div class="card carsearch">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     <!-- ============================================================= SEARCH AREA : END ============================================================= -->
                 </div>
                 <!-- /.top-search-holder -->
@@ -137,7 +155,31 @@
 
     </div>
     <!-- /.main-header -->
+    <div class="modal fade" id="tracking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Tracking Order</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
+                    <form action="{{route('tracking')}}" method="POST">
+                        @csrf
+                        <label for="">Invoid Code</label>
+                        <input name="code" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter invoide code">
+                        <button class="btn btn-info " style="margin-top: 10px;">Check now</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ============================================== NAVBAR ============================================== -->
     <div class="header-nav animate-dropdown">
         <div class="container">
@@ -173,19 +215,19 @@
                                                     @endphp
                                                     @foreach($subs as $value)
                                                     <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                                                    <a href="{{route('category.page',$value->id)}}">
-                                                        <h2 class="title titlemenu">
+                                                        <a href="{{route('category.page',$value->id)}}">
+                                                            <h2 class="title titlemenu">
 
-                                                            @if(session()->get('language') == 'korean')
-                                                            {{$value->subcategory_name_hin}}
-                                                            @else
-                                                            {{$value->subcategory_name_en}}
-                                                            @endif
-                                                        </h2>
-                                                    </a>
+                                                                @if(session()->get('language') == 'korean')
+                                                                {{$value->subcategory_name_hin}}
+                                                                @else
+                                                                {{$value->subcategory_name_en}}
+                                                                @endif
+                                                            </h2>
+                                                        </a>
                                                         <ul class="links">
                                                             @php
-                                                            $subsubs = App\Models\SubSubCategory::where('subcategory_id',$key->id)->get();
+                                                            $subsubs = App\Models\SubSubCategory::where('subcategory_id',$value->id)->get();
 
                                                             @endphp
                                                             @foreach($subsubs as $values)
@@ -218,6 +260,7 @@
                                     </ul>
                                 </li>
                                 @endforeach
+                                <li class=""> <a href="{{route('shop')}}">SHOP</a> </li>
 
                                 </li>
                                 <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected items</a> </li>
@@ -241,3 +284,11 @@
     <!-- ============================================== NAVBAR : END ============================================== -->
 
 </header>
+<script>
+  function search_result_hide(){
+    $("#searchProducts").slideUp();
+  }
+   function search_result_show(){
+      $("#searchProducts").slideDown();
+  }
+</script>

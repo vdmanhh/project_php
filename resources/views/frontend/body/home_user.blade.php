@@ -762,6 +762,53 @@
      });
     </script>
 
+    <script>
+
+        $(document).ready(function () {
+            $("#searchProducts").slideUp();
+            $("body").on("keyup", "#searchs", function(){
+                    let texts = $('#searchs').val();
+                    if (texts.length > 0) {
+                        $.ajax({
+                        type : 'POST',
+                        data:{code : texts},
+                        dataType : 'json',
+                        url : '/advance/search/',
+                        success : function(data){
+                            $("#searchProducts").slideDown();
+                            var as = ``;
+                          if(data == ['']){
+                        as+='<h3>No Product</h3>'
+                        $(".carsearch").html(as);
+                          }
+                          else{
+                            $.each(data,function(key,vl){
+                                as+=`<a href="">
+                    <div class="list border-bottom" style='display:flex;margin-bottom:20px;margin-top:20px'> <img src="/${vl.product_thambnail}" style="width: 50px; height: 50px;">
+
+                        <div class="d-flex flex-column ml-3" style="margin-left: 10px;"> <span>${vl.product_name_en} </span> <small> ${vl.selling_price}</small> </div>
+                    </div>
+                </a>`;
+                $(".carsearch").html(as);
+                            })
+                          }
+
+
+
+                                console.log(as);
+                        }
+                    })
+                    }
+
+                    else{
+                        if (texts.length < 1 ) $("#carsearch").html("");
+                    }
+
+
+            });
+        });
+    </script>
+
 </body>
 
 

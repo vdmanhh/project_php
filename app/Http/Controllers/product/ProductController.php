@@ -23,6 +23,21 @@ class ProductController extends Controller
     }
 
     public function addProduct(Request $request){
+
+        $request->validate([
+            'down' => 'required|mimes:jpeg,png,jpg,zip,pdf|max:10000',
+          ]);
+
+          if ($files = $request->file('down')) {
+            $destinationPath = 'upload/pdf'; // upload path
+            $digitalItem = date('YmdHis') . "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath,$digitalItem);
+          }
+
+
+
+
+        //////
         $image = $request->file('product_thambnail');
     	$name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
     	Image::make($image)->resize(917,1000)->save('upload/product/thambnail/'.$name_gen);
@@ -61,7 +76,7 @@ class ProductController extends Controller
 
       	'product_thambnail' => $save_url,
 
-
+          'down' => $digitalItem,
       	'status' => 1,
       	'created_at' => Carbon::now(),
 

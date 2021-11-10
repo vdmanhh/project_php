@@ -65,5 +65,15 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkauth' => \App\Http\Middleware\CheckAuth::class,
         'usercheck' => \App\Http\Middleware\UserCheck::class,
+        'categorycheck' => \App\Http\Middleware\CategoryCheck::class,
+        'stateordercheck' => \App\Http\Middleware\StateOrderCheck::class,
+        'productcheck' => \App\Http\Middleware\ProductCheck::class,
+        'managerusercheck' => \App\Http\Middleware\ManageUserCheck::class,
+        'shipcheck' => \App\Http\Middleware\ShipCheck::class,
+        'couponcheck' => \App\Http\Middleware\CouponCheck::class,
+        'returnordercheck' => \App\Http\Middleware\ReturnOrderCheck::class,
+        'brandcheck' => \App\Http\Middleware\BrandOrderChecl::class,
+        'slidercheck' => \App\Http\Middleware\SliderCheck::class,
+        'accesscheck' => \App\Http\Middleware\Access::class,
     ];
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\category\CategoryController;
 use App\Http\Controllers\admin\coupon\CouponController;
 use App\Http\Controllers\admin\order\OrderController;
+use App\Http\Controllers\admin\role\RoleController;
 use App\Http\Controllers\admin\shipping\ShipController;
 use App\Http\Controllers\admin\subcategory\SubCateController;
 use App\Http\Controllers\admin\subsubcate\SubSubCate;
@@ -49,7 +50,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','checkauth']],function(){
 });
 
 //brand admin
-Route::group(['prefix'=>'brand','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'brand','middleware'=>['auth','checkauth','brandcheck']],function(){
 
     Route::get('/brand',[BrandController::class,'brands'])->name('brand');
     Route::get('/brand/edit/{id}',[BrandController::class,'brandsEdit'])->name('brand.edit');
@@ -74,7 +75,7 @@ Route::group(['middleware'=>'auth'],function(){
 });
 
 //category
-Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth','categorycheck']],function(){
 
     Route::get('/category',[CategoryController::class,'category'])->name('category');
 
@@ -89,7 +90,7 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
 });
 
 //sub-cate
-Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth','categorycheck']],function(){
 
     Route::get('/subcategory',[SubCateController::class,'subcategory'])->name('subcategory');
     Route::post('/add/subcategory',[SubCateController::class,'addsubcategory'])->name('add.subcategory');
@@ -97,8 +98,8 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
     Route::post('/update/subcategory/{id}',[SubCateController::class,'UpdateSubCate'])->name('update.subcategory');
     Route::get('/subcategory/delete/{id}',[SubCateController::class,'subcategoryDelete'])->name('subcategory.delete');
 });
-
-Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
+//subsubcate
+Route::group(['prefix'=>'category','middleware'=>['auth','checkauth','categorycheck']],function(){
 
     Route::get('/subsubcategory',[SubSubCate::class,'subcategory'])->name('subsubcate');
     Route::post('/subsubcategory/add',[SubSubCate::class,'Addsubcategory'])->name('add.subsubcategory');
@@ -108,7 +109,7 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
 });
 
 //product
-Route::group(['prefix'=>'product','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'product','middleware'=>['auth','checkauth','productcheck']],function(){
 
     Route::get('/product',[ProductController::class,'product'])->name('product');
     Route::get('/product/manager',[ProductController::class,'product_manager'])->name('product.manager');
@@ -127,7 +128,7 @@ Route::group(['prefix'=>'product','middleware'=>['auth','checkauth']],function()
 
 //slider
 
-Route::group(['prefix'=>'slider','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'slider','middleware'=>['auth','checkauth','slidercheck']],function(){
 
     Route::get('/slider',[SliderController::class,'slider'])->name('slider');
     Route::post('/slider/add',[SliderController::class,'add_slider'])->name('add.slider');
@@ -174,7 +175,7 @@ Route::get('/incre/cart/{rowId}',[CartController::class,'IncreCart']);
 
 ///coupon
 
-Route::group(['prefix'=>'coupon','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'coupon','middleware'=>['auth','checkauth','couponcheck']],function(){
 
     Route::get('/coupon',[CouponController::class,'coupon'])->name('coupon');
      Route::post('/coupon/add',[CouponController::class,'couponAdd'])->name('add.coupon');
@@ -184,7 +185,7 @@ Route::group(['prefix'=>'coupon','middleware'=>['auth','checkauth']],function(){
 });
 //shipping
 
-Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth','shipcheck']],function(){
 
     Route::get('/ship',[ShipController::class,'coupon'])->name('ship');
     Route::post('/ship/division/add',[ShipController::class,'AddDivision'])->name('add.division');
@@ -193,7 +194,7 @@ Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth']],function(){
     Route::get('/ship/division/delete/{id}',[ShipController::class,'division_delete'])->name('division.delete');
 });
 //district
-Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'ship','middleware'=>['auth','checkauth','shipcheck']],function(){
 
     Route::get('/district',[ShipController::class,'district'])->name('district');
     Route::post('/district/add',[ShipController::class,'Adddistrict'])->name('add.district');
@@ -227,8 +228,8 @@ Route::get('/get/states/{id}',[CartController::class,'getState']);
     Route::post('/orders',[CartController::class,'orders'])->name('orders');
 });
 
-//admin order
-Route::group(['prefix'=>'orders','middleware'=>['auth','checkauth']],function(){
+//admin state order
+Route::group(['prefix'=>'orders','middleware'=>['auth','checkauth','stateordercheck']],function(){
 
     Route::get('/pending',[OrderController::class,'OrderPending'])->name('order.pending');
     Route::get('/processing',[OrderController::class,'OrderProcess'])->name('order.processing');
@@ -242,7 +243,7 @@ Route::group(['prefix'=>'orders','middleware'=>['auth','checkauth']],function(){
 });
 
 ///  manager
-Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'user','middleware'=>['auth','checkauth','managerusercheck']],function(){
 
     Route::get('/all/users',[Users::class,'AllUsers'])->name('user.alls');
 
@@ -251,7 +252,7 @@ Route::group(['prefix'=>'category','middleware'=>['auth','checkauth']],function(
 
 Route::post('/add/comment',[Commment::class,'Comment'])->name('add.comment');
 //// admin return prder
-Route::group(['prefix'=>'return','middleware'=>['auth','checkauth']],function(){
+Route::group(['prefix'=>'return','middleware'=>['auth','checkauth','returnordercheck']],function(){
 
     Route::get('/return',[Commment::class,'OrderReturn'])->name('order.returns');
     Route::get('/accept/return/{id}',[Commment::class,'Orderaccept'])->name('accept');
@@ -259,3 +260,28 @@ Route::group(['prefix'=>'return','middleware'=>['auth','checkauth']],function(){
 
 
 });
+///role admin
+Route::group(['prefix'=>'role','middleware'=>['auth','checkauth','accesscheck']],function(){
+
+    Route::get('/role',[RoleController::class,'Role_User'])->name('role');
+    Route::get('/add/role',[RoleController::class,'Add_Role_User'])->name('add.role');
+    Route::get('/edit/role/{id}',[RoleController::class,'Edit_Role_User'])->name('role.edit');
+    Route::post('/create/role',[RoleController::class,'Create_Role_User'])->name('add.role.admin');
+    Route::post('/update/role/{id}',[RoleController::class,'Update_Role_User'])->name('editt.role.admin');
+
+
+
+
+});
+
+// tracking order
+
+Route::post('/tracking',[UserController::class,'tracking'])->name('tracking');
+// search
+Route::post('/search',[Frontend::class,'search'])->name('search');
+// search advance
+Route::post('/advance/search',[Frontend::class,'Advancesearch']);
+//shop
+Route::get('/shop',[Frontend::class,'shop'])->name('shop');
+//shop filter cate
+Route::post('/shop',[Frontend::class,'shopFilter'])->name('shop.filter');

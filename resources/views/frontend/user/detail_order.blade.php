@@ -85,6 +85,7 @@
                             <th scope="col">Quantity</th>
 
                             <th scope="col">Price </th>
+                            <th scope="col">DownLoad</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +98,14 @@
                             <td>{{$item->size}}</td>
                             <td>{{$item->qty}}</td>
                             <td>{{$item->price}} $</td>
-
+                            @php
+                            $file = App\Models\Product::where('id',$item->product_id)->first();
+                            @endphp
+                            <td>
+                            <a target="_blank" href="{{ asset('upload/pdf/'.$file->down) }}">
+                                <strong>
+                            <span class="badge badge-pill badge-success" style="background: #FF0000;padding:10px 10px"> Download Ready</span>  </strong> </a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

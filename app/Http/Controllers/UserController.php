@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -90,10 +91,14 @@ class UserController extends Controller
     public function user_profile_update(Request $request){
 
         if($request->file('image')){
+
+
             @unlink(public_path('upload/admin/'.Auth::user()->avatar));
             $image = $request->file('image');
             $filename = date('YmdHi').$image->getClientOriginalName();
             $image->move(public_path('upload/admin'),$filename);
+
+
 
             DB::table('users')->where('id',Auth::user()->id)->update([
                 'name'=>$request->name,
@@ -157,6 +162,22 @@ class UserController extends Controller
             );
             return Redirect()->back()->with($notice);
         }
+
+    }
+
+    public function tracking(Request $request){
+            $code = $request->code;
+            $order = Order::where('invoice_no',$code)->where('user_id',Auth::id())->first();
+            if($order){
+                return view('frontend.user.tracking',compact('order'));
+            }else{
+                $notice = array(
+                    'message'=> "Invoid code Invalid",
+                    "alert-type" => "warning"
+                );
+                return Redirect()->back()->with($notice);
+            }
+
 
     }
 }

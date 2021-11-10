@@ -9,6 +9,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Expr\FuncCall;
 
 class Frontend extends Controller
 {
@@ -33,11 +34,21 @@ class Frontend extends Controller
         return view('frontend.body.product_tags',compact('products','tags_hin','tags_en','cates'));
     }
 
-    public function categoriess($slugs){
-        $products = Product::where('status',1)->where('subcategory_id',$slugs)->orderBy('id','DESC')->paginate(3);
+    public function categoriess(Request $request,$slugs){
+        $products = Product::where('status',1)->where('subcategory_id',$slugs)->orderBy('id','DESC')->paginate(1);
         $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
         $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
         $cates =Category::latest()->get();
+
+        //ajax load more
+        if ($request->ajax()) {
+            $grid_view = view('frontend.body.grid_view',compact('products'))->render();
+
+            $list_view = view('frontend.body.list_view',compact('products'))->render();
+             return response()->json(['grid_view' => $grid_view,'list_view'=>$list_view]);
+
+                 }
+        //end ajax
         return view('frontend.body.subcategory',compact('products','tags_en','tags_hin','cates'));
     }
 
@@ -122,5 +133,68 @@ class Frontend extends Controller
     public function removeCart($rowId){
         Cart::remove($rowId);
         return response()->json(['success'=>'Remove cart successfully']);
+    }
+
+    public function search(Request $request){
+        $request->validate(["search" => "required"]);
+        $item = $request->search;
+
+        $products = Product::where('product_name_en','LIKE',"%$item%")->get();
+
+
+        $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
+        $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
+        $cates =Category::latest()->get();
+        return view('frontend.body.search',compact('products','tags_en','tags_hin','cates'));
+    }
+
+
+    public function Advancesearch(Request $request){
+        $request->validate(["code" => "required"]);
+        $item = $request->code;
+        $products = Product::where('product_name_en','LIKE',"%$item%")->select('product_name_en','product_thambnail','selling_price','id','product_slug_en')->limit(5)->get();
+        // return view('frontend.body.form_search',compact('products'));
+        return response()->json($products);
+    }
+
+    /// shop
+    public function shop(){
+        $products = Product::query();
+        if(!empty($_GET['category'])){
+            //dd($_GET['category']);
+            $slugs = explode(',',$_GET['category']);
+            $catIds = Category::select('id')->whereIn('category_slug_en',$slugs)->pluck('id')->toArray();
+
+            $products = $products->whereIn('category_id',$catIds)->paginate(3);
+        }
+        else{
+            $products = Product::where('status',1)->orderBy('id','DESC')->paginate(3);
+       }
+
+
+
+        $tags_en = Product::groupBy('product_tags_en')->select('product_tags_en')->get();
+        $tags_hin = Product::groupBy('product_tags_hin')->select('product_tags_hin')->get();
+        $cates =Category::latest()->get();
+        return view('frontend.body.shop',compact('products','cates','tags_en','tags_hin'));
+    }
+
+
+    public function shopFilter(Request $request){
+
+        $data= $request->all();
+
+        $catUrl = "";
+        if (!empty($data['category'])) {
+           foreach ($data['category'] as $category) {
+              if (empty($catUrl)) {
+                 $catUrl .= '&category='.$category;
+              }else{
+                $catUrl .= ','.$category;
+              }
+           } // end foreach condition
+        } // end if condition
+
+        return redirect()->route('shop',$catUrl);
     }
 }

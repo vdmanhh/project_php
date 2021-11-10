@@ -2,6 +2,17 @@
 
 @section('home')
 
+@php
+$comments = App\Models\Comment::where('product_id',$product->id)->latest()->limit(5)->get();
+$commentsTotal = App\Models\Comment::where('product_id',$product->id)->latest()->get();
+$avarage = App\Models\Comment::where('product_id',$product->id)->avg('rating');
+@endphp
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
 <div class="body-content outer-top-xs">
     <div class='container'>
         <div class='row single-product'>
@@ -121,11 +132,39 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="pull-left">
-                                                <div class="rating rateit-small"></div>
+                                                @if($avarage == 0)
+                                                No Rating Yet
+                                                @elseif($avarage == 1 || $avarage < 2) <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    @elseif($avarage == 2 || $avarage < 3) <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        @elseif($avarage == 3 || $avarage < 4) <span class="fa fa-star checked"></span>
+                                                            <span class="fa fa-star checked"></span>
+                                                            <span class="fa fa-star checked"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+
+                                                            @elseif($avarage == 4 || $avarage < 5) <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star"></span>
+                                                                @elseif($avarage == 5 || $avarage < 5) <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    @endif
                                             </div>
                                             <div class="pull-left">
                                                 <div class="reviews">
-                                                    <a href="#" class="lnk">(13 Reviews)</a>
+                                                    <a href="#" class="lnk">( {{count($commentsTotal)}} rating )</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -188,49 +227,49 @@
                                 </div><!-- /.price-container -->
 
                                 <div class="quantity-container info-container">
-                                <input type="hidden" class="inputhiden" value="{{$product->id}}">
+                                    <input type="hidden" class="inputhiden" value="{{$product->id}}">
 
                                     <form action="">
-                                    <div class="row rww">
+                                        <div class="row rww">
 
-                                        <div class="coll" style="margin-left:10px" style="width: 200px;">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Select Color</label>
-                                                <select class="form-control selectcolor" id="exampleFormControlSelect1">
-                                                    <option selected="" disabled>Choose Color</option>
-                                                    @foreach($new_color as $key )
-                                                    <option value="{{$key}}">{{ucwords($key)}}</option>
-                                                    @endforeach
+                                            <div class="coll" style="margin-left:10px" style="width: 200px;">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Select Color</label>
+                                                    <select class="form-control selectcolor" id="exampleFormControlSelect1">
+                                                        <option selected="" disabled>Choose Color</option>
+                                                        @foreach($new_color as $key )
+                                                        <option value="{{$key}}">{{ucwords($key)}}</option>
+                                                        @endforeach
 
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
                                             @if($product->product_size_en == null)
                                             @else
-                                            <div class="coll"  style="width: 200px;">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Select Size</label>
-                                                <select class="form-control selectsize" id="exampleFormControlSelect1">
-                                                    <option selected="" disabled>Choose Size</option>
-                                                   @foreach($new_size as $key )
-                                                    <option value="{{$key}}">{{ucwords($key)}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <div class="coll" style="width: 200px;">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Select Size</label>
+                                                    <select class="form-control selectsize" id="exampleFormControlSelect1">
+                                                        <option selected="" disabled>Choose Size</option>
+                                                        @foreach($new_size as $key )
+                                                        <option value="{{$key}}">{{ucwords($key)}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             @endif
 
 
 
-                                        <input type="number"  style="width: 200px;height: 34px;transform:translateY(21px)" class="qtyys form-control" value="1">
-                                    </div><!-- /.row -->
-                                    <div class="add-btn" style="transform: translateX(-20px);">
+                                            <input type="number" style="width: 200px;height: 34px;transform:translateY(21px)" class="qtyys form-control" value="1">
+                                        </div><!-- /.row -->
+                                        <div class="add-btn" style="transform: translateX(-20px);">
                                             <button type="button" onclick="addToCart()" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO
                                                 CART</button>
                                         </div>
 
-                                 </form>
+                                    </form>
                                 </div><!-- /.quantity-container -->
 
 
@@ -268,21 +307,73 @@
                                         </p>
                                     </div>
                                 </div><!-- /.tab-pane -->
-                                @php
-                                    $comments = App\Models\Comment::latest()->limit(5)->get();
-                                @endphp
+
 
                                 <div id="review" class="tab-pane">
                                     <div class="product-tab">
-                                    @if(count($comments)>0)
-                                    @foreach($comments as $key)
+                                        @if(count($comments)>0)
+                                        @foreach($comments as $key)
                                         <div class="product-reviews">
                                             <h4 class="title" style="display: flex;"><img style="width: 40px;height:40px;margin-right:10px;border-radius:50%" src="
                                             {{(!empty($key->user->avatar))? url('upload/user/'.$key->user->avatar):
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU'}}
-                                            " alt=""> {{$key->user->name}}</h4>
+                                            " alt=""> {{$key->user->name}}
+
+                                                @if($key->rating == NULL)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                @elseif($key->rating == 1)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                @elseif($key->rating == 2)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star "></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                @elseif($key->rating == 3)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                @elseif($key->rating == 4)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                @elseif($key->rating == 5)
+                                                <div style="padding-left: 10px;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                </div>
+                                                @endif
+
+
+                                            </h4>
 
                                             <div class="reviews">
+
                                                 <div class="review">
                                                     <div class="review-title"><span class="summary">{{$key->title}}</span><span class="date"><i class="fa fa-calendar"></i><span>{{Carbon\Carbon::parse($key->created_at)->diffForHumans()}}</span></span></div>
                                                     <div class="text">"{{$key->comment}}"</div>
@@ -291,14 +382,14 @@
                                             </div><!-- /.reviews -->
                                         </div><!-- /.product-reviews -->
                                         @endforeach
-                                    @else
+                                        @else
 
-                                    @endif
+                                        @endif
 
-                                    @guest
+                                        @guest
 
-                                    @else
-                                         <div class="product-add-review">
+                                        @else
+                                        <div class="product-add-review">
                                             <h4 class="title">Write your own review</h4>
 
 
@@ -308,7 +399,7 @@
                                                         @csrf
                                                         <div class="row">
                                                             <div class="col-sm-6">
-                                                            <div class="form-group">
+                                                                <div class="form-group">
 
                                                                     <input type="hidden" name="id" value="{{$product->id}}" class="form-control txt" id="exampleInputSummary" placeholder="">
                                                                 </div><!-- /.form-group -->
@@ -325,7 +416,33 @@
                                                                 </div><!-- /.form-group -->
                                                             </div>
                                                         </div><!-- /.row -->
+                                                        <div class="review-table">
+                                                            <div class="table-responsive">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="cell-label">&nbsp;</th>
+                                                                            <th>1 star</th>
+                                                                            <th>2 stars</th>
+                                                                            <th>3 stars</th>
+                                                                            <th>4 stars</th>
+                                                                            <th>5 stars</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
 
+                                                                        <tr>
+                                                                            <td class="cell-label">Star</td>
+                                                                            <td><input type="radio" name="quality" class="radio" value="1"></td>
+                                                                            <td><input type="radio" name="quality" class="radio" value="2"></td>
+                                                                            <td><input type="radio" name="quality" class="radio" value="3"></td>
+                                                                            <td><input type="radio" name="quality" class="radio" value="4"></td>
+                                                                            <td><input type="radio" name="quality" class="radio" value="5"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table><!-- /.table .table-bordered -->
+                                                            </div><!-- /.table-responsive -->
+                                                        </div><!-- /.review-table -->
                                                         <div class="action text-right">
                                                             <button type="submit" class="btn btn-primary btn-upper">Comment</button>
                                                         </div><!-- /.action -->
@@ -335,7 +452,7 @@
                                             </div><!-- /.review-form -->
 
                                         </div><!-- /.product-add-review -->
-                                    @endguest
+                                        @endguest
 
 
                                     </div><!-- /.product-tab -->
@@ -399,18 +516,18 @@
 
                                             <div class="product-info text-left">
                                                 <h3 class="name"><a href="{{url('detail/product/'.$product->id.'/'.$product->product_slug_en)}}">
-                                                @if(session()->get('language') == 'korean')
-                                                    {{$product->product_name_hin}}
-                                                    @else
-                                                    {{$product->product_name_en}}
-                                                    @endif
-                                                </a></h3>
+                                                        @if(session()->get('language') == 'korean')
+                                                        {{$product->product_name_hin}}
+                                                        @else
+                                                        {{$product->product_name_en}}
+                                                        @endif
+                                                    </a></h3>
                                                 <div class="rating rateit-small"></div>
                                                 <div class="description"></div>
 
                                                 <div class="product-price">
                                                     <span class="price">
-                                                    $ {{number_format($product->discount_price)}}</span>
+                                                        $ {{number_format($product->discount_price)}}</span>
                                                     <span class="price-before-discount">$ {{number_format($product->selling_price)}}</span>
 
                                                 </div><!-- /.product-price -->
@@ -446,7 +563,7 @@
                                     </div><!-- /.products -->
                                 </div><!-- /.item -->
 
-                                    @endforeach
+                                @endforeach
 
 
                             </div><!-- /.home-owl-carousel -->

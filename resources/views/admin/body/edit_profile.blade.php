@@ -5,10 +5,23 @@
     <div class="row">
         <div class="col-4">
 
-            <img class="showimage" style="border-radius:100%;width: 240px;height:240px;margin-left:50%;transform:translateX(-50%); margin-top:20px;margin-bottom:20px" src="
-                    {{(!empty($user->avatar))? url('upload/admin/'.$user->avatar):
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU'}}
-                    " alt="">
+          
+
+
+<!--  -->
+                                @if(!empty($user->avatar))
+                                @if($user->type == 2)
+                                <img class="img-profile rounded-circle" src="{{asset($user->avatar)}}" style="border-radius:100%;width: 240px;height:240px;margin-left:50%;transform:translateX(-50%); margin-top:20px;margin-bottom:20px">
+                                @else
+                                <img class="img-profile rounded-circle" src="{{url('upload/admin/'.$user->avatar)}}" style="border-radius:100%;width: 240px;height:240px;margin-left:50%;transform:translateX(-50%); margin-top:20px;margin-bottom:20px">
+                                @endif
+                            @else
+                         <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU" style="border-radius:100%;width: 240px;height:240px;margin-left:50%;transform:translateX(-50%); margin-top:20px;margin-bottom:20px">
+                            @endif
+
+<!--  -->
+
+
             <div style="text-align: center;">
 
                 <h3>{{$user->name}}</h3>

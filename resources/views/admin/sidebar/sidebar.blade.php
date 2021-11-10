@@ -2,7 +2,7 @@
 $prefix = Request::route()->getPrefix();
 $route = Route::current()->getName();
 
-
+$user = Auth::user();
 @endphp
 
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
@@ -23,7 +23,7 @@ $route = Route::current()->getName();
         Features
     </div>
 
-
+    @if($user->category ==1)
     <li class="nav-item manhs  {{$prefix == '/category' ? 'activess' : ''}}">
         <a class="nav-link collapsed active" href="#" data-toggle="collapse" data-target="#collapseBootstrap" aria-expanded="true" aria-controls="collapseBootstrap">
             <i class="far fa-fw fa-window-maximize"></i>
@@ -39,8 +39,11 @@ $route = Route::current()->getName();
         </div>
     </li>
 
+    @else
+    @endif
 
 
+    @if($user->state_order ==1)
     <li class="nav-item  {{$prefix == '/orders' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true" aria-controls="collapseForm">
             <i class="fab fa-fw fa-wpforms"></i>
@@ -57,11 +60,12 @@ $route = Route::current()->getName();
             </div>
         </div>
     </li>
+    @else
+    @endif
 
 
 
-
-
+    @if($user->product ==1)
     <li class="nav-item {{$prefix == '/product' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true" aria-controls="collapseTable">
             <i class="fas fa-fw fa-table"></i>
@@ -75,9 +79,10 @@ $route = Route::current()->getName();
             </div>
         </div>
     </li>
+    @else
+    @endif
 
-
-
+    @if($user->ship ==1)
     <li class="nav-item {{$prefix == '/ship' ? 'activess' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true" aria-controls="collapsePage">
             <i class="fas fa-fw fa-columns"></i>
@@ -93,41 +98,70 @@ $route = Route::current()->getName();
 
         </div>
     </li>
+    @else
+    @endif
 
-
-
+    @if($user->coupon ==1)
     <li class="nav-item {{$prefix == '/coupon' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('coupon')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Coupon</span>
         </a>
     </li>
+    @else
+    @endif
+
+    @if($user->brand ==1)
     <li class="nav-item {{$prefix == '/brand' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('brand')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Brand</span>
         </a>
     </li>
+    @else
+    @endif
 
+    @if($user->slider ==1)
     <li class="nav-item {{$prefix == '/slider' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('slider')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Slider</span>
         </a>
     </li>
+    @else
+    @endif
+
+
+    @if($user->user ==1)
     <li class="nav-item {{$prefix == '/user' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('user.alls')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Manager User</span>
         </a>
     </li>
+    @else
+    @endif
+
+    @if($user->return_order ==1)
     <li class="nav-item {{$prefix == '/return' ? 'activess' : ''}}">
         <a class="nav-link" href="{{route('order.returns')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Return Order</span>
         </a>
     </li>
+    @else
+    @endif
 
+
+    @if($user->access ==1)
+    <li class="nav-item {{$prefix == '/role' ? 'activess' : ''}}">
+        <a class="nav-link" href="{{route('role')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Role User</span>
+        </a>
+    </li>
+    @else
+    @endif
 
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>

@@ -201,7 +201,10 @@
                     </div>
                 </div>
             </div>
-
+            <div class="form-group" style="width: 300px;margin-top:20px">
+                        <label for="exampleFormControlInput1">Upload file PDF</label>
+                       <input name="down" type="file">
+                    </div>
           <button type="submit" class="btn btn-info mt-5">Add Product</button>
         </form>
     </div>

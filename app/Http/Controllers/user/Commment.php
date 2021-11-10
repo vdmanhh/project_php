@@ -17,14 +17,17 @@ class Commment extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'comment' => 'required',
+            'quality' => 'required',
 
             // categories la ten bang trong csdl
         ], [
             'title.required' => 'Please fill out information',
 
             'comment.required' => 'Please fill out information',
+            'quality.required' => 'Please fill out information',
 
         ]);
+
 
 
         Comment::insert([
@@ -32,6 +35,7 @@ class Commment extends Controller
             'comment' => $request->comment,
             'user_id' => Auth::id(),
             'product_id' =>  $request->id,
+            'rating' => $request->quality,
             'created_at' => Carbon::now()
         ]);
 

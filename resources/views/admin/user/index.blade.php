@@ -32,10 +32,12 @@
                                     <td>{{$id++}}</td>
                                     @if(!empty($key->avatar))
 
-                                    @if($key->role == '1')
+                                    @if($key->type == 1)
                         <td><img style="width: 80px;height:80px;" src="{{url('upload/admin/'.$key->avatar)}} " alt=""></td>
-                                    @else
+                                    @elseif($key->type == 0)
                         <td><img style="width: 80px;height:80px;" src="{{url('upload/user/'.$key->avatar)}} " alt=""></td>
+                                    @else
+                                    <td><img style="width: 80px;height:80px;" src="{{asset($key->avatar)}} " alt=""></td>
                                     @endif
 
                                     @else

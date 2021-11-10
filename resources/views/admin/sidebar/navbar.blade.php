@@ -150,11 +150,23 @@ $user = Auth::user();
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <img class="img-profile rounded-circle" src="
-                              {{(!empty($user->avatar))? url('upload/admin/'.$user->avatar):
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU'}}
-                              " style="width: 55px;height:55px">
-                                <span class="ml-2 d-none d-lg-inline text-white small">{{$user->name}}</span>
+
+                            @if(!empty($user->avatar))
+                                @if($user->type == 2)
+                                <img class="img-profile rounded-circle" src="{{asset($user->avatar)}}" style="width: 55px;height:55px">
+                                @else
+                                <img class="img-profile rounded-circle" src="{{url('upload/admin/'.$user->avatar)}}" style="width: 55px;height:55px">
+                                @endif
+                            @else
+                         <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC6iPDSqcgCcAtdEz_rPY0B-sxqMd7hz0Hlg&usqp=CAU" style="width: 55px;height:55px">
+                            @endif
+
+
+
+
+
+
+                              <span class="ml-2 d-none d-lg-inline text-white small">{{$user->name}}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{route('edit.profile')}}">
